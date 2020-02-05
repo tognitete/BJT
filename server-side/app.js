@@ -1,15 +1,19 @@
-const http = require('http');
-const helloWorld = require('./hello').helloWorld
+var express = require('express');
+var app = express();
 
-const hostname = '127.0.0.1';
+const say_hello = require('./hello').say_hello
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
+app.get('/', function(req, res) {
+  //say_hello('hello world from post request')
+  let hello = say_hello('hello world from post request')
+  res.send(hello);
 });
 
-server.listen(8003, hostname, () => {
-    console.log("listenning at port 8003.............")
-    helloWorld();
+// POST method route
+app.post('/', function (req, res) {
+  res.send(say_hello('hello world from post request'));
 });
+
+
+app.listen(3001)
+console.log("server is listenning on localhost:3001")
