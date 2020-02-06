@@ -8,7 +8,7 @@ var UserModelSchema = new Schema({
     a_date: Date
   });
   
-var userModel = mongoose.model('SomeModel', UserModelSchema );
+var userModel = mongoose.model('User', UserModelSchema );
 
 module.exports = {
     userModel: userModel
