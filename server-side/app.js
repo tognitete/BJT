@@ -1,12 +1,13 @@
 var express = require('express');
 var app = express();
 
-const say_hello = require('./hello').say_hello
 
+const saveUser = require('./controllers/UserController').saveUser
+
+// GET method route
 app.get('/', function(req, res) {
-  //say_hello('hello world from post request')
-  let hello = say_hello('hello world from post request')
-  res.send(hello);
+
+  res.send(saveUser({ name: "GLaDOS", game: "Portal" }));
 });
 
 // POST method route
