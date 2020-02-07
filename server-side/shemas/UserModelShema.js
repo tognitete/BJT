@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var UserModelSchema = new Schema({
     name: String,
-    a_date: Date
+    //a_date: Date
   });
   
 var userModel = mongoose.model('User', UserModelSchema );

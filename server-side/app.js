@@ -5,7 +5,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-const saveUser = require('./controllers/UserController').saveUser
+const userController = require('./controllers/UserController')
+
+
 
 // GET method route
 app.get('/', function(req, res) {
@@ -13,11 +15,19 @@ app.get('/', function(req, res) {
 });
 
 app.get('/users', function(req, res) {
-  res.send("get all users");
+
+  userController.getAllUsers(function(data) {
+    
+    res.send(data);  
+})
 });
 
 app.get('/users/:userID', function(req, res) {
-  res.send("get users with ID "+req.params.userID);
+ 
+  userController.getUserById(req.params.userID,function(data) {
+    
+    res.send(data);
+})
 });
 
 
@@ -29,7 +39,7 @@ app.post('/', function (req, res) {
 
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
-  res.send(saveUser({ name: req.body.name}));
+  res.send(userController.saveUser({ name: req.body.name}));
 });
 
 
