@@ -1,0 +1,15 @@
+div {
+
+    margin-bottom: 2em;
+}
+
+input ,textarea , select ,button {
+
+     width: 30em;
+     height: 2em;
+}
+
+.radio {
+
+    margin: auto;
+}
