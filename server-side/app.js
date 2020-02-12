@@ -6,7 +6,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const userController = require('./controllers/UserController')
-
+const pluginController = require('./controllers/PluginController')
 
 
 // GET method route
@@ -40,6 +40,12 @@ app.post('/', function (req, res) {
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
   res.send(userController.saveUser({ name: req.body.name}));
+});
+
+
+app.post('/plugin', function (req, res) {
+  console.log('Got body:', req.body);
+  res.send(pluginController.savePlugin(req.body));
 });
 
 
