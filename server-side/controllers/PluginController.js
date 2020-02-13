@@ -17,11 +17,35 @@ var plugin = {
           return pluginData ;
         }),
 
+
+    getAllPlugins : ((callback) => {
+ 
+        var query = PluginModel.find();
+            
+        query.exec(function (err,plugins) {
+        if (err) return handleError(err);
+            callback(plugins)
+        });
+    }),
+          
+    getPluginByName : ((pluginName,callback) => {
+
+      var query = PluginModel.find({ 'nom': pluginName }); 
+            query.exec(function (err,user) {
+            if (err) return handleError(err);
+              callback(user)
+            });
+             
+    })
     
-   }
+}
+
+   
 
 module.exports = {
-    savePlugin : plugin.savePlugin
+    savePlugin : plugin.savePlugin,
+    getAllPlugins : plugin.getAllPlugins,
+    getPluginByName : plugin.getPluginByName
 };
 
 

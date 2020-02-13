@@ -82,14 +82,13 @@ class Form extends Component {
 	sendPluginData(data) {	
 		axios.post("http://localhost:3001/plugin",data)
 		    .then(response => {
-			console.log(response.json())
-		})
-		
-		.catch(error => {
+			console.log(response)
+		}).catch(error => {
 
             console.log(error)
 		});
 	}
+
     handleInputChange(event) {
 		
         const target = event.target;

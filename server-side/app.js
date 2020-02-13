@@ -35,6 +35,24 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
+app.get('/plugin/:pluginName', function(req, res) {
+ 
+  pluginController.getPluginByName(req.params.pluginName,function(data) {
+    
+    res.send(data);
+})
+});
+
+app.get('/plugins', function(req, res) {
+ 
+  pluginController.getAllPlugins(function(data) {
+    
+    res.send(data);  
+})
+});
+
+
+
 
 // POST method route
 app.post('/', function (req, res) {
