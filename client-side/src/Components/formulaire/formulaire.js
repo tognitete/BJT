@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './formulaire.css'
-import ImageUploader from 'react-images-upload';
+import ImageUploader from 'react-images-upload'
+import axios from 'axios'
 
 class Form extends Component {
 	constructor(props) {
@@ -13,12 +14,11 @@ class Form extends Component {
 			nom: '',
 			version: '',
             description: '',
-			
 			pictures: [],
-		opensource: false,
-		topic: '',
-		tag: '',
-		tutoriel: '',
+		    opensource: false,
+		    topic: '',
+		    tag: '',
+		    tutoriel: '',
 		}
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -66,7 +66,6 @@ class Form extends Component {
 	}
 
 	
-
 	handleTopicChange = event => {
 		this.setState({
 			topic: event.target.value
@@ -77,7 +76,20 @@ class Form extends Component {
 		alert(`${this.state.username} ${this.state.comments} ${this.state.topic}`)
 		console.log(this.state);
 		event.preventDefault()
-    }
+		this.sendPluginData(this.state)
+	}
+	
+	sendPluginData(data) {	
+		axios.post("http://localhost:3001/plugin",data)
+		    .then(response => {
+			console.log(response.json())
+		})
+		
+		.catch(error => {
+
+            console.log(error)
+		});
+	}
     handleInputChange(event) {
 		
         const target = event.target;
@@ -156,6 +168,7 @@ class Form extends Component {
 				<div>
                 <label>Topic</label>
 					<select value={this.state.topic} onChange={this.handleTopicChange}>
+					    <option value=""></option>
 						<option value="modulation">Modultion</option>
 						<option value="distorsion">Distorsion</option>
 						<option value="egalisation">Egalisation</option>

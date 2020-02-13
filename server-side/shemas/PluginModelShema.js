@@ -4,7 +4,7 @@ const mongoose = require('../database').mongoose
 var Schema = mongoose.Schema;
 
 var PluginModelSchema = new Schema({
-    name: String,
+    nom: String,
     version : String,
     description : String,
     pictures : Buffer,
