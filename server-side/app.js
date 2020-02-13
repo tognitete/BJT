@@ -6,8 +6,13 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const userController = require('./controllers/UserController')
+const pluginController = require('./controllers/PluginController')
 
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // GET method route
 app.get('/', function(req, res) {
@@ -30,6 +35,24 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
+app.get('/plugin/:pluginName', function(req, res) {
+ 
+  pluginController.getPluginByName(req.params.pluginName,function(data) {
+    
+    res.send(data);
+})
+});
+
+app.get('/plugins', function(req, res) {
+ 
+  pluginController.getAllPlugins(function(data) {
+    
+    res.send(data);  
+})
+});
+
+
+
 
 // POST method route
 app.post('/', function (req, res) {
@@ -40,6 +63,12 @@ app.post('/', function (req, res) {
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
   res.send(userController.saveUser({ name: req.body.name}));
+});
+
+
+app.post('/plugin', function (req, res) {
+  console.log('Got body:', req.body);
+  res.send(pluginController.savePlugin(req.body));
 });
 
 
