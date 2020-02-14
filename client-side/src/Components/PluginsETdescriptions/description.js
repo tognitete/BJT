@@ -4,7 +4,34 @@ import './description.css'
 import axios from 'axios'
 
 
+
+
 export default class Description extends Component {
+  constructor(props) {
+
+		super(props)
+      this.getPluginData()
+
+      this.state = {
+			
+        data: []
+      }
+
+  }
+  getPluginData() {
+    axios.get("http://localhost:3001/plugin/pianoA")
+    .then(response => {
+    console.log(response)
+    this.setState({
+      data: response.data[0]
+
+  })
+  console.log(this.state.data)
+}).catch(error => {
+
+    console.log(error)
+});
+}
   render() {
     return (
       <div>
@@ -20,9 +47,10 @@ export default class Description extends Component {
             <div class = "container" className="details">
 
               <h1>Version : </h1>
-              <h1>Description détaillée : </h1>
+    <h1>Description détaillée : {this.state.data.description}</h1>
                 
             </div>
+            
             </div>
                    
                      
@@ -32,18 +60,11 @@ export default class Description extends Component {
                           </div>
                   
                     </div>
+      
             
     )
   }
 
-  getPluginData() {
-    axios.get("http://localhost:3001/plugin/manel")
-    .then(response => {
-    console.log(response)
-}).catch(error => {
-
-    console.log(error)
-});
-}
+ 
   
 }
