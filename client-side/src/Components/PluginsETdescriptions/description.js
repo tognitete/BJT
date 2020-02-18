@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import pluginImage from '../Images/pluginImage.png'
-import './description.css' 
+import pluginImage from '../../Images/pluginImage.png'
+import '../PluginsETdescriptions/description.css' 
 import axios from 'axios'
 
 

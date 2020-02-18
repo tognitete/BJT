@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Description from './Components/description';
+import Description from './Components/PluginsETdescriptions/description';
 import Navbar from './Components/Navbar/Navbar' ;
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import { BrowserRouter , Switch , Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
+import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins';
 
 function App() {
   return (
@@ -19,9 +20,15 @@ function App() {
 
        <div className="App">
        <Switch>
-           <Route path="/description">
+           <Route path="/affichagePlugins">
+            <AffichagePlugins />
+          </Route>
+
+          <Route path="/description">
             <Description />
           </Route>
+
+        
           <Route path="/">
             <Form />
           </Route>
@@ -32,5 +39,8 @@ function App() {
    
    </>
   );
+  
+  
 }
 export default App;
+
