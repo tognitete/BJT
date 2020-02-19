@@ -9,7 +9,7 @@ import { BrowserRouter , Switch , Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
-import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins';
+import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins';
 
 function App() {
   return (
