@@ -192,7 +192,7 @@ class Form extends Component {
 					/>
 				</div>
                 
-				<button type="submit">Somettre</button>
+				<button type="submit">Soumettre</button>
 			</form>
 		)
 	}
