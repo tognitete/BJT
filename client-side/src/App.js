@@ -9,7 +9,6 @@ import { BrowserRouter , Switch , Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
-import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins';
 import Login from './Components/login/login';
 import Signup from './Components/login/signup'
 
@@ -38,7 +37,7 @@ function App(props) {
            <Route exact path="/" component= {Form}/>
            
         </Switch>
-        
+
       </div>
 
      </BrowserRouter>
