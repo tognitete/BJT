@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Description from './Components/description';
+
 import Navbar from './Components/Navbar/Navbar' ;
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
 
@@ -9,6 +9,10 @@ import { BrowserRouter , Switch , Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
+import Login from './Components/login/login';
+import Signup from './Components/login/signup'
+
+
 
 function App() {
   return (
@@ -19,11 +23,13 @@ function App() {
 
        <div className="App">
        <Switch>
-           <Route path="/description">
-            <Description />
+           
+         
+          <Route exact path="/signup">
+            <Signup />
           </Route>
-          <Route path="/">
-            <Form />
+          <Route exact path="/">
+            <Login />
           </Route>
         </Switch>
       </div>
