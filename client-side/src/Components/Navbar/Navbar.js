@@ -10,6 +10,7 @@ const Navbar = () => {
         <ul>
         <li><NavLink to='/'>Audio-Plugin</NavLink></li>  
         <li className="right"><NavLink to='/'>Profil</NavLink></li>
+        <li className="right"><NavLink to='/login'>Login</NavLink></li>
         <li className="right"><NavLink to='/'>Soumettre</NavLink></li>
         <li className="right"><NavLink to='/affichagePlugins'>Plugins</NavLink></li>
         </ul>
