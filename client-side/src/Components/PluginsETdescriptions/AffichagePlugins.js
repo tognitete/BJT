@@ -15,22 +15,32 @@ export default class AffichagePlugins extends Component {
 
 		super(props)
 		
-		this.state  = {
-      redirect: false
+    super(props)
+    this.getPluginData()
+
+    this.state = {
+    
+      data: []
     }
 		
-		} 
- 
-  setRedirect = () => {
-    this.setState({
-      redirect: true
+    } 
+    
+    getAllPlugins() {
+    axios.get("http://localhost:3001/plugins")
+      .then(response => {
+      console.log(response)
+      this.setState({
+        data: response.data
+  
     })
+    console.log(this.state.data)
+  }).catch(error => {
+  
+      console.log(error)
+  });
   }
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <NavLink to='/'></NavLink>
-    }
-  }
+ 
+  
   render() {
     return (
      
@@ -60,7 +70,7 @@ export default class AffichagePlugins extends Component {
        
        </div>
      </div>
-    <div> <button onClick={event =>  window.location.href='/description'}>Click</button></div>
+    <div> <button onClick={event =>  window.location.href='/description/name'}>Click</button></div>
      <div class="plugins">
        <div class="plugin4">
        <img src={pluginImage} alt={"plugin image"}/> 

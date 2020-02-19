@@ -19,7 +19,7 @@ export default class Description extends Component {
 
   }
   getPluginData() {
-    axios.get("http://localhost:3001/plugin/pianoA")
+    axios.get("http://localhost:3001/plugin/manel")
     .then(response => {
     console.log(response)
     this.setState({
@@ -58,8 +58,12 @@ export default class Description extends Component {
               <h1>Nom du plugin <br />Présentation du plugin</h1>
                             
                           </div>
-                  
+                          <div>
+            {this.props.match.params.name}
+      </div>
                     </div>
+    
+    
       
             
     )

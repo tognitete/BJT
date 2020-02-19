@@ -11,7 +11,7 @@ import ReactDOM from 'react-dom';
 import Form from './Components/formulaire/formulaire';
 import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins';
 
-function App() {
+function App(props) {
   return (
     <>
      <BrowserRouter>
@@ -20,13 +20,11 @@ function App() {
 
        <div className="App">
        <Switch>
-           <Route path="/affichagePlugins">
-            <AffichagePlugins />
-          </Route>
-
-          <Route path="/description">
-            <Description />
-          </Route>
+           <Route exact path="/affichagePlugins" component= {AffichagePlugins } />
+           
+           <Route exact path="/description/:name" component= {Description } />
+           
+           
 
         
           <Route path="/">
