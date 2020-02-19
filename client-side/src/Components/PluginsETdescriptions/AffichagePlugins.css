@@ -1,50 +1,10 @@
-.image1 {
-    border: 1px solid #ccc;
+
+  .Bouton {
+    
+    width:10;
+   
   }
-  
-  .image1:hover {
-    border: 1px solid #777;
-  }
-  
-  
-  /*.image1 {
-    width: 100%;
-    height: auto;
-  }
-  */
-  .bouton {
-    padding: 15px;
-    text-align: center;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  .plugins {
-    padding: 0 6px;
-    float: left;
-    width: 24.99999%;
-  }
-  
  
-  .conteneur { 
-    background:#ccc;
-    width:400px;
-    padding:10px; /* espace interne du conteneur */
-    text-align:center; }
-    
-    .image1 { 
-    padding:10px; /* aération interne des blocs */
-    margin:0 10px; /* espacement horizontal entre les blocs */
-    width:100px;
-    border:1px solid #fff;
-    display:inline-block;
-    vertical-align:middle;
-    text-align:left; /* on rétablit l'alignement du texte */ } 
-    
-    
-    
     
     
     

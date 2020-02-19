@@ -32,22 +32,25 @@ export default class Description extends Component {
     console.log(error)
 });
 }
+
+
+
   render() {
     return (
       <div>
       
             <div className="image">
             <img src={pluginImage} alt={"plugin image"}/> 
-            <div className="desc">
+              <div className="desc">
 
             <h1>Description du plugin </h1>
                             
-            </div>
+              </div>
 
             <div class = "container" className="details">
 
               <h1>Version : </h1>
-    <h1>Description détaillée : {this.state.data.description}</h1>
+                <h1>Description détaillée : {this.state.data.description}</h1>
                 
             </div>
             
@@ -60,8 +63,8 @@ export default class Description extends Component {
                           </div>
                           <div>
             {this.props.match.params.name}
-      </div>
-                    </div>
+            </div>
+    </div>
     
     
       
