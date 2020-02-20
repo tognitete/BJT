@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import pluginImage from '../../Images/pluginImage.png'
 import '../PluginsETdescriptions/description.css' 
@@ -35,6 +36,7 @@ export default class Description extends Component {
     console.log(error)
 });
 }
+
 
 
 
@@ -79,3 +81,4 @@ export default class Description extends Component {
  
   
 }
+

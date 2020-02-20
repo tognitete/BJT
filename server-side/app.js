@@ -109,7 +109,7 @@ app.post('/plugin', upload.single('pictures') , function (req, res) {
     nom: req.body.nom,
     version : req.body.version,
     description : req.body.description,
-    pictures : req.file.path ,
+    pictures : req.file.filename ,
     opensource : req.body.opensource ,
     topic : req.body.topic,
     tag : req.body.tag,
@@ -139,6 +139,6 @@ imageServer.use('/uploads', express.static(__dirname + '/uploads/'));
 server.listen(8081);
 
 /* */
-s
+
 
 app.listen(3001, () => console.log(`Started server at http://localhost:3001!`));
