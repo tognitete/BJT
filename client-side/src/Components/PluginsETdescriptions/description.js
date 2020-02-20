@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import pluginImage from '../../Images/pluginImage.png'
 import '../PluginsETdescriptions/description.css' 
 import axios from 'axios'
+import ImageUploader from 'react-images-upload'
 import {  Button } from 'reactstrap';
 
 

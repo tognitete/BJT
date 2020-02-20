@@ -9,7 +9,11 @@ import { BrowserRouter , Switch , Route } from 'react-router-dom';
 //import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
-import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins';
+import Login from './Components/login/login';
+import Signup from './Components/login/signup'
+
+
+import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins'
 
 
 function App(props) {
@@ -21,15 +25,20 @@ function App(props) {
 
        <div className="App">
        <Switch>
-           <Route exact path="/affichagePlugins" component= {AffichagePlugins } />
+           
+         
+          <Route exact path="/signup" component= {Signup} />
+          
+          <Route exact path="/login" component= {Login} />
+           
+           <Route exact path="/affichagePlugins" component= {AffichagePlugins} />
            
            <Route exact path="/description/:name" component= {Description } />
            
+           <Route exact path="/" component= {Form}/>
            
-          <Route path="/">
-            <Form />
-          </Route>
         </Switch>
+
       </div>
 
      </BrowserRouter>
