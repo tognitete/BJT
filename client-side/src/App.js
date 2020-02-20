@@ -6,10 +6,11 @@ import Navbar from './Components/Navbar/Navbar' ;
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
 
 //import SimpleForm from './Components/form';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
 import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins';
+
 
 function App(props) {
   return (
@@ -25,8 +26,6 @@ function App(props) {
            <Route exact path="/description/:name" component= {Description } />
            
            
-
-        
           <Route path="/">
             <Form />
           </Route>
