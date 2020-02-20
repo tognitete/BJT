@@ -7,7 +7,7 @@ var PluginModelSchema = new Schema({
     nom: String,
     version : String,
     description : String,
-    pictures : Buffer,
+    pictures : String,
     opensource : String ,
     topic : String,
     tag : String,

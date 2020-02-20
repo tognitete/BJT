@@ -1,0 +1,31 @@
+.image {
+
+float: left;
+margin-top: 8em;
+margin-left: 2em;
+
+}
+
+.details
+{
+  margin: 10px 0 ;
+	padding: 0 ;
+	text-align: justify ;
+	font: 0.4em "Trebuchet MS", helvetica, sans-serif ;
+	
+}
+
+
+
+.presentation
+  {
+  margin: 10px 0 ;
+	padding: 0 ;
+	text-align: center ;
+	font: 0.8em "Trebuchet MS", helvetica, sans-serif ;
+	height: 258px ;
+  }
+
+
+
+

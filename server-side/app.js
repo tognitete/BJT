@@ -1,16 +1,53 @@
 var express = require('express');
 var app = express();
+const multer = require('multer');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 const userController = require('./controllers/UserController')
 const pluginController = require('./controllers/PluginController')
 
-app.use(function(req, res, next) {
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
+
+
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
   next();
 });
 
@@ -52,8 +89,6 @@ app.get('/plugins', function(req, res) {
 });
 
 
-
-
 // POST method route
 app.post('/', function (req, res) {
   res.send("Hello from post method route");
@@ -66,10 +101,44 @@ app.post('/user', function (req, res) {
 });
 
 
-app.post('/plugin', function (req, res) {
-  console.log('Got body:', req.body);
-  res.send(pluginController.savePlugin(req.body));
+app.post('/plugin', upload.single('pictures') , function (req, res) {
+  console.log('Got body:', req);
+
+  let pluginInformation = {
+
+    nom: req.body.nom,
+    version : req.body.version,
+    description : req.body.description,
+    pictures : req.file.filename ,
+    opensource : req.body.opensource ,
+    topic : req.body.topic,
+    tag : req.body.tag,
+    tutoriel : req.body.tutoriel
+
+  }
+  res.send(pluginController.savePlugin(pluginInformation));
 });
+
+/* plugin try & test */
+
+pluginServer = express(),
+server = require('http').createServer(pluginServer);
+
+pluginServer.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
+
+server.listen(8080);
+
+/* */
+
+/* display plugin image */
+imageServer = express(),
+server = require('http').createServer(imageServer);
+
+imageServer.use('/uploads', express.static(__dirname + '/uploads/'));
+
+server.listen(8081);
+
+/* */
 
 
 app.listen(3001, () => console.log(`Started server at http://localhost:3001!`));
