@@ -2,14 +2,14 @@ var express = require('express');
 var app = express();
 const multer = require('multer');
 
-
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/uploads', express.static('uploads'));
+
 
 const userController = require('./controllers/UserController')
 const pluginController = require('./controllers/PluginController')
+
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -89,18 +89,6 @@ app.get('/plugins', function(req, res) {
 });
 
 
-/* plugin try & test */
-
-app = express(),
-server = require('http').createServer(app);
-
-app.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
-
-server.listen(8080);
-
-/* */
-
-
 // POST method route
 app.post('/', function (req, res) {
   res.send("Hello from post method route");
@@ -131,5 +119,26 @@ app.post('/plugin', upload.single('pictures') , function (req, res) {
   res.send(pluginController.savePlugin(pluginInformation));
 });
 
+/* plugin try & test */
+
+pluginServer = express(),
+server = require('http').createServer(pluginServer);
+
+pluginServer.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
+
+server.listen(8080);
+
+/* */
+
+/* display plugin image */
+imageServer = express(),
+server = require('http').createServer(imageServer);
+
+imageServer.use('/uploads', express.static(__dirname + '/uploads/'));
+
+server.listen(8081);
+
+/* */
+s
 
 app.listen(3001, () => console.log(`Started server at http://localhost:3001!`));
