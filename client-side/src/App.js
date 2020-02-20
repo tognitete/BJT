@@ -6,7 +6,7 @@ import Navbar from './Components/Navbar/Navbar' ;
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
 
 //import SimpleForm from './Components/form';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
 import Login from './Components/login/login';
@@ -14,6 +14,7 @@ import Signup from './Components/login/signup'
 
 
 import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins'
+
 
 function App(props) {
   return (
