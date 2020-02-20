@@ -89,6 +89,16 @@ app.get('/plugins', function(req, res) {
 });
 
 
+/* plugin try & test */
+
+app = express(),
+server = require('http').createServer(app);
+
+app.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
+
+server.listen(8080);
+
+/* */
 
 
 // POST method route
