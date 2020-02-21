@@ -14,7 +14,7 @@ class Form extends Component {
 			nom: '',
 			version: '',
             description: '',
-			pictures: [],
+			pictures: null,
 		    opensource: false,
 		    topic: '',
 		    tag: '',
@@ -31,7 +31,7 @@ class Form extends Component {
 
 	onDrop(picture) {
         this.setState({
-            pictures: this.state.pictures.concat(picture),
+            pictures: picture[0],
         });
     }
  
@@ -74,14 +74,26 @@ class Form extends Component {
 	}
 
 	handleSubmit = event => {
-		alert(`${this.state.username} ${this.state.comments} ${this.state.topic}`)
 		console.log(this.state);
 		event.preventDefault()
-		this.sendPluginData(this.state)
+		console.log(this.state);
+
+		const data = new FormData() 
+
+		for ( var key in this.state ) {
+			data.append(key, this.state[key]);
+			
+		}
+
+		
+		this.sendPluginData(data)
 	}
 	
 	sendPluginData(data) {	
-		axios.post("http://localhost:3001/plugin",data)
+		const config = {     
+			headers: { 'content-type': 'multipart/form-data' }
+		}
+		axios.post("http://localhost:3001/plugin",data,config)
 		    .then(response => {
 			console.log(response)
 		}).catch(error => {

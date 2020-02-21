@@ -66,6 +66,8 @@
             loadPlugin(className, baseURL);
         }).catch((e) => {
             console.log(e);
+            alert("Le plugin n'a pas pu être chargé.");
+            window.stop();
         });
     }
 
