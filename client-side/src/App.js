@@ -10,6 +10,7 @@ import { BrowserRouter , Switch , Route } from 'react-router-dom';
 //import SimpleForm from './Components/form';
 import Form from './Components/formulaire/formulaire';
 import Login from './Components/login/login';
+import TesterPlugin from './Components/PluginsETdescriptions/testerPlugin'
 import Signup from './Components/login/signup'
 
 
@@ -34,6 +35,8 @@ function App(props) {
            <Route exact path="/affichagePlugins" component= {AffichagePlugins} />
            
            <Route exact path="/description/:name" component= {Description } />
+           <Route exact path="/testerPlugin" component= {TesterPlugin } />
+           
            
            <Route exact path="/" component= {Form}/>
            
