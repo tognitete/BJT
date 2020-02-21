@@ -2,16 +2,23 @@ import React, { Component } from "react";
     import Form from 'react-bootstrap/Form'
     import Button from 'react-bootstrap/Button'
     import Bootstrap from "react-bootstrap";
+    import {Redirect} from "react-router-dom"
     import "./login.css";
-    
+    const token = localStorage.getItem("token")
     var passwordHash = require('password-hash');
     export default class Login extends Component {
       constructor(props) {
         super(props);
-
+        
+        let loggedIn=true
+        if(token==null){
+          loggedIn=false
+        }
         this.state = {
           email: "",
-          password: ""
+          password: "",
+          loggedIn:false,
+          error: ""
         };
       }
 
@@ -29,10 +36,27 @@ import React, { Component } from "react";
 
       handleSubmit = event => {
         event.preventDefault();
-        console.log(this.state.email,passwordHash.generate(this.state.password));
+        const email = this.state.email
+        const password = passwordHash.generate(this.state.password)
+        /*console.log(this.state.email,passwordHash.generate(this.state.password));*/
+        try {
+          
+          localStorage.setItem("token", token)
+          this.setState({
+              loggedIn: true
+          })
+      } catch (err) {
+          this.setState({
+              error: err.message
+          })
       }
-
+  }  
+      
+      
       render() {
+       if(this.state.loggedIn){
+          return <Redirect to="/" />
+       }else {
         return (
 
           <div className="Login" >
@@ -72,6 +96,9 @@ import React, { Component } from "react";
             </Form>
           </div>
         );
+       }
+ 
+        
       }
     }
-    
+
