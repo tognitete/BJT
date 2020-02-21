@@ -18,7 +18,8 @@ class Form extends Component {
 		    opensource: false,
 		    topic: '',
 		    tag: '',
-		    tutoriel: '',
+			tutoriel: '',
+			lien:''
 		}
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -104,9 +105,15 @@ class Form extends Component {
 		  opensource: changeEvent.target.value
 		});
 	  }
+	  handleLienChange = event => {
+		this.setState({
+			lien: event.target.value
+			
+		}) 
+	}
  
 	render() {
-		const { Nom, Version, description, topic, Tag, Tutoriel } = this.state
+		const { Nom, Version, description, topic, Tag, Tutoriel, lien } = this.state
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div className="Nom_plugin">
@@ -191,8 +198,17 @@ class Form extends Component {
 						onChange={this.handleTutorielChange}
 					/>
 				</div>
-                
+                <div>
+					<label>Lien vers le plugin</label>
+					<input
+						type="url"
+						value={this.state.lien}
+						onChange={this.handleLienChange}
+					/>
+				</div>
 				<button type="submit">Soumettre</button>
+				
+				
 			</form>
 		)
 	}
