@@ -1,6 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import Description from './Components/description';
+//import LoginForm from './Components/login/login';
+
+
+//import SimpleForm from './Components/form';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+//import {BrowserRouter, Switch, Route} from "react-router-dom"
 import Description from './Components/PluginsETdescriptions/description';
 import Navbar from './Components/Navbar/Navbar' ;
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
