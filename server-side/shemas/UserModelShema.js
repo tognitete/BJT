@@ -4,8 +4,8 @@ const mongoose = require('../database').mongoose
 var Schema = mongoose.Schema;
 
 var UserModelSchema = new Schema({
-    name: String,
-    //a_date: Date
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
   });
   
 var userModel = mongoose.model('User', UserModelSchema );
