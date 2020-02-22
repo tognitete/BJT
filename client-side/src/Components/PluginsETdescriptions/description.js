@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import pluginImage from '../../Images/pluginImage.png'
 import '../PluginsETdescriptions/description.css' 
 import axios from 'axios'
-import ImageUploader from 'react-images-upload'
 import {  Button } from 'reactstrap';
+
+
 
 
 
@@ -36,7 +37,10 @@ export default class Description extends Component {
     console.log(error)
 });
 }
+getImagePlugin(image){
+  return 'http://localhost:8081/uploads/'+image
 
+}
 
 
 
@@ -45,7 +49,7 @@ export default class Description extends Component {
       <div>
       
             <div className="image">
-                <img src={this.state.data.pictures} alt={"plugin image"}/> 
+                <img src={this.getImagePlugin(this.state.data.pictures)} alt={"plugin image"}/> 
               <div className="desc">
                 <h1>Description du plugin : {this.state.data.description}</h1>
                             
@@ -58,7 +62,7 @@ export default class Description extends Component {
                 <h1>- Tag : {this.state.data.tag}</h1>
                 <h1>- Tutoriel : {this.state.data.tutoriel}</h1>
                 
-                <Button style={{ width: '10rem' }} onClick={event =>  window.location.href='/description/'}>Tester {this.state.data.name} </Button>
+                <Button style={{ width: '10rem' }} onClick={event =>  window.location.href='/testerPlugin/'}>Tester {this.state.data.name} </Button>
                 
               </div>
             

@@ -41,16 +41,22 @@ export default class AffichagePlugins extends Component {
                    });
   }
 
- GetRow(){
+  getImagePlugin(image){
+    return 'http://localhost:8081/uploads/'+image
+  
+  }
 
+ GetRow(){
+   let image = ""
  const tabShow =  this.state.data.map(function(d, i){
     console.log('test');
+    image = 'http://localhost:8081/uploads/'+d.pictures
     return <div key={i} >   
     <Col>
 
 
        <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={pluginImage} />
+          <Card.Img variant="top" src={image} />
           <Card.Body>
             <Card.Title>{d.nom}</Card.Title>
             <Card.Text>

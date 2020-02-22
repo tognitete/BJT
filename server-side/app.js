@@ -6,6 +6,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
 
 const userController = require('./controllers/UserController')
 const pluginController = require('./controllers/PluginController')
@@ -97,7 +101,7 @@ app.post('/', function (req, res) {
 
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
-  res.send(userController.saveUser({ name: req.body.name}));
+  res.send(userController.saveUser({ email: req.body.email , password: bcrypt.hash(req.body.password, saltRounds)}));
 });
 
 
