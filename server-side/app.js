@@ -101,7 +101,24 @@ app.post('/', function (req, res) {
 
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
-  res.send(userController.saveUser({ email: req.body.email , password: bcrypt.hash(req.body.password, saltRounds)}));
+
+
+  bcrypt.hash(req.body.password, saltRounds,
+    function(err, hashedPassword) {
+    if (err) {
+      next(err);
+    }
+    else {
+      req.body.password = hashedPassword;
+    }
+
+    console.log(req.body.password)
+  res.send(userController.saveUser({ email: req.body.email , password: req.body.password}));
+
+    
+      
+});
+
 });
 
 
