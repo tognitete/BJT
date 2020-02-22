@@ -9,6 +9,7 @@ import Acceuil from './Components/login/acceuil';
 import Signup from './Components/login/signup';
 import Logout from './Components/login/logout'
 import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins'
+import TesterPlugin from './Components/PluginsETdescriptions/testerPlugin'
 
 
 function App(props) {
