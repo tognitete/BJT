@@ -55,7 +55,7 @@ import React, { Component } from "react";
       
       render() {
        if(this.state.loggedIn){
-          return <Redirect to="/" />
+          return <Redirect to="/acceuil" />
        }else {
         return (
 

@@ -161,19 +161,22 @@ class Form extends Component {
                 maxFileSize={5242880}
             />
 				 </div>
-                <div>
+                <div >
                 <label>
                 Le logiciel est open source:
-				<div className="radio">
-            <input
+				<div className="radio" >
+					<div className="rb1">
+		     <input 
+
               name="opensource"
               type="radio"
               checked={this.state.opensource}
 			  onChange={this.handleRadioChange} 
 			  value = "oui"
-			  checked={this.state.opensource === 'oui'}/> Oui
+			  checked={this.state.opensource === 'oui'}/> Oui</div>
 
              <input
+			 
               name="opensource"
               type="radio"
               checked={this.state.opensource}
