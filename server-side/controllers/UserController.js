@@ -7,6 +7,8 @@ var user = {
          // Create an instance of user model
          var userInstance = new UserModel(userData);
 
+         console.log(userData)
+
          // Save the new model instance, passing a callback
          userInstance.save(function (err) {
 
@@ -30,6 +32,28 @@ var user = {
 
         
      }),
+
+     getUserByEmail : ((userEmail) => {
+
+      return new Promise((resolve, reject) => {
+
+        var query = UserModel.find({ 'email': userEmail });
+         
+        query.exec(function (err,user) {
+
+        if (err) {reject("Échec")}
+        else  {
+          resolve(user);
+        }
+         
+        });
+
+      }
+
+      )
+    }),
+
+      
      
     getAllUsers : ((callback) => {
  
@@ -46,6 +70,7 @@ var user = {
 
 module.exports = {
     saveUser : user.saveUser,
+    getUserByEmail : user.getUserByEmail,
     getUserById : user.getUserById, 
     getAllUsers : user.getAllUsers
 };

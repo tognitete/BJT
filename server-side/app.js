@@ -99,6 +99,7 @@ app.post('/', function (req, res) {
 });
 
 
+
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
 
@@ -119,6 +120,36 @@ app.post('/user', function (req, res) {
       
 });
 
+});
+
+app.post('/auth', function (req, res) {
+
+   
+
+  userController.getUserByEmail(req.body.email).then(function(data) {
+
+
+       console.log("data",data)
+      
+      if(data.length == 0){
+
+        res.send(false)
+
+      }else {
+
+       bcrypt.compare(req.body.password,data[0].password, function(err, same) {
+       if (err) {
+         res.send(err)
+       } else {
+         res.send(same)
+       }
+     });
+   }
+    })
+
+
+   
+ 
 });
 
 
