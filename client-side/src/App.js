@@ -34,6 +34,8 @@ function App(props) {
            <Route exact path="/affichagePlugins" component= {AffichagePlugins} />
            
            <Route exact path="/description/:name" component= {Description } />
+           <Route exact path="/testerPlugin" component= {TesterPlugin } />
+           
            
            <Route exact path="/" component= {Form}/>
            
@@ -45,7 +47,6 @@ function App(props) {
      </BrowserRouter>
    
    </>
-
   );
   
   
