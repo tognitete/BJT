@@ -49,7 +49,7 @@ class AffichageCommentaire extends Component {
   render() {
     const loadingSpin = this.state.loading ? "App-logo Spin" : "App-logo";
     return (
-      <div className="App container bg-light shadow">
+      <div className="App container bg-light shadow borderGray"  style={{ "border" : "2px solid #cec7c7"}}>
         
 
         <div className="row">

@@ -79,7 +79,13 @@ export default class AffichagePlugins extends Component {
      
               <div >
                   <h2>Web Audio Modules</h2>
+                
+                  <br/>
+                  <br/>
                   <h4>Showing all results</h4>
+               
+                  <br/>
+                  <br/>
                   <Container>
                     <Row>
                     

@@ -58,16 +58,20 @@ getImagePlugin(image){
                 <div class="column">   
                         <img src={this.getImagePlugin(this.state.data.pictures)} alt={"plugin image"}/>
                         <h1>     Plugin description  {this.state.data.description}  </h1>
-                
-                
-                         
+                        <br/> 
+                        <br/> 
+              
                          <StarsRating/>
                 
-                          <h1>Comment my plugin</h1>
-                          <AffichageCommentaire/>
+                         
                </div>  
                 
-                <div class="column">
+                <div class="column" >
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
 
                   <h1>Plus d'informations : </h1>
                   <h1>- Version : {this.state.data.version}</h1>
@@ -80,10 +84,21 @@ getImagePlugin(image){
 
   </div>
   <div class="footer">
-                   <Button style={{ width: '10rem' }} onClick={event =>  window.location.href='/affichagePlugins/'}>Try it {this.state.data.name} </Button>
+
+
+ 
+                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Try it {this.state.data.name} </button>
+     
+                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.state.data.name} </button>
                    
-                   <Button style={{ width: '10rem' }} onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.state.data.name} </Button>
-                </div>  
+
+                   <br/>     
+                   <br/>     
+                   <br/>  
+                   <br/>    
+                   <AffichageCommentaire/>
+
+  </div>  
     
   </div>   
             
