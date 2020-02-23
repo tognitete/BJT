@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/Navbar' ;
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
 import Form from './Components/formulaire/formulaire';
 import Login from './Components/login/login';
+import Acceuil from './Components/login/acceuil';
 import Signup from './Components/login/signup';
 import Logout from './Components/login/logout'
 import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins'
@@ -26,6 +27,8 @@ function App(props) {
          
 
           <Route exact path="/signup" component= {Signup} />
+          <Route exact path="/acceuil" component= {Acceuil} />
+          <Route exact path="/formulaire" component= {Form} />
           
           <Route exact path="/login" component= {Login} />
 

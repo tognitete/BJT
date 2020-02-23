@@ -6,6 +6,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
 
 const userController = require('./controllers/UserController')
 const pluginController = require('./controllers/PluginController')
@@ -95,9 +99,57 @@ app.post('/', function (req, res) {
 });
 
 
+
 app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
-  res.send(userController.saveUser({ name: req.body.name}));
+
+
+  bcrypt.hash(req.body.password, saltRounds,
+    function(err, hashedPassword) {
+    if (err) {
+      next(err);
+    }
+    else {
+      req.body.password = hashedPassword;
+    }
+
+    console.log(req.body.password)
+  res.send(userController.saveUser({ email: req.body.email , password: req.body.password}));
+
+    
+      
+});
+
+});
+
+app.post('/auth', function (req, res) {
+
+   
+
+  userController.getUserByEmail(req.body.email).then(function(data) {
+
+
+       console.log("data",data)
+      
+      if(data.length == 0){
+
+        res.send(false)
+
+      }else {
+
+       bcrypt.compare(req.body.password,data[0].password, function(err, same) {
+       if (err) {
+         res.send(err)
+       } else {
+         res.send(same)
+       }
+     });
+   }
+    })
+
+
+   
+ 
 });
 
 

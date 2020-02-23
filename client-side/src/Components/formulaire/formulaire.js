@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './formulaire.css'
 import ImageUploader from 'react-images-upload'
 import axios from 'axios'
+const endpoint = 'http://localhost:3001/plugin'
 
 class Form extends Component {
 	constructor(props) {
@@ -24,6 +25,7 @@ class Form extends Component {
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleRadioChange = this.handleRadioChange.bind(this);
+		this.state = { selectedFile: null, loaded: 0, }
 		//console.log('this vaut :', this); 
 
 
@@ -123,6 +125,29 @@ class Form extends Component {
 			
 		}) 
 	}
+
+	handleselectedFile = event => {
+		this.setState({
+		  selectedFile: event.target.files[0],
+		  loaded: 0,
+		})
+	  }
+	  
+	handleUpload = () => {
+    const data = new FormData()
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+    axios
+      .post(endpoint, data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+          })
+        },
+      })
+      .then(res => {
+        console.log(res.statusText)
+      })
+  }
  
 	render() {
 		const { Nom, Version, description, topic, Tag, Tutoriel, lien } = this.state
@@ -161,19 +186,22 @@ class Form extends Component {
                 maxFileSize={5242880}
             />
 				 </div>
-                <div>
+                <div >
                 <label>
                 Le logiciel est open source:
-				<div className="radio">
-            <input
+				<div className="radio" >
+					<div className="rb1">
+		     <input 
+
               name="opensource"
               type="radio"
               checked={this.state.opensource}
 			  onChange={this.handleRadioChange} 
 			  value = "oui"
-			  checked={this.state.opensource === 'oui'}/> Oui
+			  checked={this.state.opensource === 'oui'}/> Oui</div>
 
              <input
+			 
               name="opensource"
               type="radio"
               checked={this.state.opensource}
@@ -218,6 +246,11 @@ class Form extends Component {
 						onChange={this.handleLienChange}
 					/>
 				</div>
+				<div className="App">
+        <input type="file" name="" id="" onChange={this.handleselectedFile} />
+        <button onClick={this.handleUpload}>Upload</button>
+        <div> {Math.round(this.state.loaded,2) } %</div>
+          </div>
 				<button type="submit">Soumettre</button>
 				
 				

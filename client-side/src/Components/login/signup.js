@@ -2,6 +2,7 @@ import React, { Component } from "react";
     import Form from 'react-bootstrap/Form'
     import Button from 'react-bootstrap/Button'
     import "./signup.css";
+    import axios from 'axios'
 
     
     import {Redirect} from "react-router-dom"
@@ -38,12 +39,23 @@ import React, { Component } from "react";
       handleSubmit = event => {
         event.preventDefault();
        const {email, password, confirmPassword} = this.state
-        console.log(this.state.email,passwordHash.generate(this.state.password));
+        /*console.log(this.state.email,passwordHash.generate(this.state.password));*/
+        console.log(this.state);
         
-       
+        this.sendLoginData({email: this.state.email, password: this.state.password})
         
   }  
-  
+  sendLoginData(data) {	
+		
+		axios.post("http://localhost:3001/user",data)
+		    .then(response => {
+			console.log(response)
+		}).catch(error => {
+
+            console.log(error)
+		});
+	}
+
       
       
       render() {
