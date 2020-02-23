@@ -7,7 +7,7 @@ import Form from './Components/formulaire/formulaire';
 import Login from './Components/login/login';
 import Signup from './Components/login/signup';
 import Logout from './Components/login/logout'
-import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins'
+import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins'
 
 
 function App(props) {
@@ -34,8 +34,8 @@ function App(props) {
            <Route exact path="/affichagePlugins" component= {AffichagePlugins} />
            
            <Route exact path="/description/:name" component= {Description } />
-           <Route exact path="/testerPlugin" component= {TesterPlugin } />
-           
+          
+                      
            
            <Route exact path="/" component= {Form}/>
            
