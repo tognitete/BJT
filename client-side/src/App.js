@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Description from './Components/PluginsETdescriptions/description';
 import Navbar from './Components/Navbar/Navbar' ;
-import { BrowserRouter , Switch , Route } from 'react-router-dom';
+import { BrowserRouter , Switch , Route ,Redirect } from 'react-router-dom';
 import Form from './Components/formulaire/formulaire';
 import Login from './Components/login/login';
 import Acceuil from './Components/login/acceuil';
@@ -38,6 +38,11 @@ function App(props) {
            <Route exact path="/description/:name" component= {withAuth(Description) } />
 
            <Route exact path="/accueil" component= {Acceuil} />
+
+           <Route exact path="/tester">
+
+            
+           </Route>
            
            
            
