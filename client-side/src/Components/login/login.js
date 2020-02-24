@@ -4,21 +4,22 @@ import React, { Component } from "react";
     import Bootstrap from "react-bootstrap";
     import {Redirect} from "react-router-dom"
     import "./login.css";
-    const token = localStorage.getItem("token")
-    var passwordHash = require('password-hash');
+    import axios from 'axios'
+   // const token = localStorage.getItem("token")
+   // var passwordHash = require('password-hash');
     export default class Login extends Component {
       constructor(props) {
         super(props);
         
-        let loggedIn=true
+        /*let loggedIn=true
         if(token==null){
           loggedIn=false
-        }
+        }*/
         this.state = {
           email: "",
           password: "",
           loggedIn:false,
-          error: ""
+          redirect: false
         };
       }
 
@@ -36,10 +37,10 @@ import React, { Component } from "react";
 
       handleSubmit = event => {
         event.preventDefault();
-        const email = this.state.email
-        const password = passwordHash.generate(this.state.password)
+        //const email = this.state.email
+        //const password = passwordHash.generate(this.state.password)
         /*console.log(this.state.email,passwordHash.generate(this.state.password));*/
-        try {
+        /*try {
           
           localStorage.setItem("token", token)
           this.setState({
@@ -49,15 +50,34 @@ import React, { Component } from "react";
           this.setState({
               error: err.message
           })
-      }
+      }*/
+
+        this.UserAuthentifiaction({email:this.state.email,password:this.state.password})
   }  
+     
+  UserAuthentifiaction(data) {
+
+    axios.post("http://localhost:3001/auth",data)
+    .then(res => {
+      if (res.status === 200) {
+        this.setState({ loggedIn: true });
+        this.props.history.push('/accueil');
+      } else {
+        const error = new Error(res.error);
+        throw error;
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error logging in please try again');
+    });
+  }
       
-      
-      render() {
-       if(this.state.loggedIn){
-          return <Redirect to="/acceuil" />
-       }else {
+      render() { 
+        
         return (
+
+          <>
 
           <div className="Login" >
 <h2 className="Connexion">Connexion</h2><br></br>
@@ -95,10 +115,12 @@ import React, { Component } from "react";
               </Button>
             </Form>
           </div>
+
+          </>
         );
        }
  
         
-      }
+      
     }
 

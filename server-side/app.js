@@ -1,12 +1,20 @@
 var express = require('express');
 var app = express();
 const multer = require('multer');
+const jwt = require('jsonwebtoken');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+
+const secret = 'audioPluginSecret';
+
+app.use(cookieParser());
+
+const withAuth = require('./middleware');
 
 const saltRounds = 10;
 
@@ -56,11 +64,11 @@ app.use((req, res, next) => {
 });
 
 // GET method route
-app.get('/', function(req, res) {
+app.get('/', withAuth ,function(req, res) {
   res.send("Hello from get method route");
 });
 
-app.get('/users', function(req, res) {
+app.get('/users',withAuth, function(req, res) {
 
   userController.getAllUsers(function(data) {
     
@@ -68,7 +76,7 @@ app.get('/users', function(req, res) {
 })
 });
 
-app.get('/users/:userID', function(req, res) {
+app.get('/users/:userID',withAuth, function(req, res) {
  
   userController.getUserById(req.params.userID,function(data) {
     
@@ -76,7 +84,7 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
-app.get('/plugin/:pluginName', function(req, res) {
+app.get('/plugin/:pluginName',withAuth, function(req, res) {
  
   pluginController.getPluginByName(req.params.pluginName,function(data) {
     
@@ -84,7 +92,7 @@ app.get('/plugin/:pluginName', function(req, res) {
 })
 });
 
-app.get('/plugins', function(req, res) {
+app.get('/plugins',withAuth, function(req, res) {
  
   pluginController.getAllPlugins(function(data) {
     
@@ -92,15 +100,19 @@ app.get('/plugins', function(req, res) {
 })
 });
 
+app.get('/checkToken', withAuth, function(req, res) {
+  res.sendStatus(200);
+});
+
 
 // POST method route
-app.post('/', function (req, res) {
+app.post('/', withAuth,function (req, res) {
   res.send("Hello from post method route");
 });
 
 
 
-app.post('/user', function (req, res) {
+app.post('/user',withAuth, function (req, res) {
   console.log('Got body:', req.body);
 
 
@@ -141,7 +153,14 @@ app.post('/auth', function (req, res) {
        if (err) {
          res.send(err)
        } else {
-         res.send(same)
+        const email = req.body.email
+        const payload = {email} ;
+        const token = jwt.sign(payload, secret, {
+          expiresIn: '1h'
+        });
+        console.log('token',token)
+        res.cookie('token', token, { httpOnly: true })
+          .sendStatus(200);
        }
      });
    }
@@ -153,7 +172,7 @@ app.post('/auth', function (req, res) {
 });
 
 
-app.post('/plugin', upload.single('pictures') , function (req, res) {
+app.post('/plugin',withAuth, upload.single('pictures') , function (req, res) {
   console.log('Got body:', req);
 
   let pluginInformation = {
