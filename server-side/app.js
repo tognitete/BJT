@@ -64,11 +64,11 @@ app.use((req, res, next) => {
 });
 
 // GET method route
-app.get('/', withAuth ,function(req, res) {
+app.get('/',function(req, res) {
   res.send("Hello from get method route");
 });
 
-app.get('/users',withAuth, function(req, res) {
+app.get('/users', function(req, res) {
 
   userController.getAllUsers(function(data) {
     
@@ -76,7 +76,7 @@ app.get('/users',withAuth, function(req, res) {
 })
 });
 
-app.get('/users/:userID',withAuth, function(req, res) {
+app.get('/users/:userID', function(req, res) {
  
   userController.getUserById(req.params.userID,function(data) {
     
@@ -92,7 +92,7 @@ app.get('/plugin/:pluginName',withAuth, function(req, res) {
 })
 });
 
-app.get('/plugins',withAuth, function(req, res) {
+app.get('/plugins', function(req, res) {
  
   pluginController.getAllPlugins(function(data) {
     
@@ -112,7 +112,7 @@ app.post('/', withAuth,function (req, res) {
 
 
 
-app.post('/user',withAuth, function (req, res) {
+app.post('/user', function (req, res) {
   console.log('Got body:', req.body);
 
 
@@ -172,7 +172,7 @@ app.post('/auth', function (req, res) {
 });
 
 
-app.post('/plugin',withAuth, upload.single('pictures') , function (req, res) {
+app.post('/plugin', upload.single('pictures'), function (req, res) {
   console.log('Got body:', req);
 
   let pluginInformation = {
