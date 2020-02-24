@@ -15,6 +15,7 @@ const Navbar = () => {
         <li className="right"><NavLink to='/formulaire'>Soumettre</NavLink></li>
         <li className="right"><NavLink to='/logout'>Logout</NavLink></li>
         <li className="right"><NavLink to='/affichagePlugins'>Plugins</NavLink></li>
+      
        
         </ul>
       </div>

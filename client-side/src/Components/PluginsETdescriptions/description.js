@@ -5,8 +5,9 @@ import '../PluginsETdescriptions/description.css'
 import axios from 'axios'
 import {  Button } from 'reactstrap';
 
-
-
+import StarsRating from "./starsRating";
+import TestCommentAPP from './affichageComment'
+import AffichageCommentaire from './affichageComment';
 
 
 
@@ -46,38 +47,60 @@ getImagePlugin(image){
 
   render() {
     return (
-      <div>
-      
-            <div className="image">
-                <img src={this.getImagePlugin(this.state.data.pictures)} alt={"plugin image"}/> 
-              <div className="desc">
-                <h1>Description du plugin : {this.state.data.description}</h1>
-                            
-              </div>
+     <div>
+        <div class="header">
+        
+              <h1>Presentation of my plugin  {this.props.match.params.name}</h1>  
+        </div>
 
-              <div class = "container" className="details">
-                <h1>Plus d'informations : </h1>
-                <h1>- Version : {this.state.data.version}</h1>
-                <h1>- Topic : {this.state.data.topic}</h1>
-                <h1>- Tag : {this.state.data.tag}</h1>
-                <h1>- Tutoriel : {this.state.data.tutoriel}</h1>
+        <div class="row">   
+        
+                <div class="column">   
+                        <img src={this.getImagePlugin(this.state.data.pictures)} alt={"plugin image"}/>
+                        <h1>     Plugin description  {this.state.data.description}  </h1>
+                        <br/> 
+                        <br/> 
+              
+                         <StarsRating/>
                 
-                <Button style={{ width: '10rem' }} onClick={event =>  window.location.href='/testerPlugin/'}>Tester {this.state.data.name} </Button>
+                         
+               </div>  
                 
-              </div>
-            
-            </div>
+                <div class="column" >
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+
+                  <h1>Plus d'informations : </h1>
+                  <h1>- Version : {this.state.data.version}</h1>
+                  <h1>- Topic : {this.state.data.topic}</h1>
+                  <h1>- Tag : {this.state.data.tag}</h1>
+                  <h1>- Tutoriel : {this.state.data.tutoriel}</h1>
+                </div>
+        
+                
+
+  </div>
+  <div class="footer">
+
+
+ 
+                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Try it {this.state.data.name} </button>
+     
+                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.state.data.name} </button>
                    
-                     
-           <div className="presentation">
-              <h1>Présentation du plugin {this.props.match.params.name}</h1>   
-                  
-            </div>
-            
-    </div>
+
+                   <br/>     
+                   <br/>     
+                   <br/>  
+                   <br/>    
+                   <AffichageCommentaire/>
+
+  </div>  
     
-    
-      
+  </div>   
             
     )
   }

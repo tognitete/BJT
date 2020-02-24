@@ -2,7 +2,7 @@ import React from 'react';
 //import ReactDOM from 'react-dom';
 import StarRatingComponent from 'react-star-rating-component';
  
-export default class TesterPlugin extends React.Component {
+export default class StarsRating extends React.Component {
   constructor() {
     super();
  
@@ -27,8 +27,10 @@ export default class TesterPlugin extends React.Component {
           value={rating}
           onStarClick={this.onStarClick.bind(this)}
         />
-   
+        
       </div>
+
+
     );
   }
 }

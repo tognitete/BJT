@@ -9,7 +9,7 @@ import Acceuil from './Components/login/acceuil';
 import Signup from './Components/login/signup';
 import Logout from './Components/login/logout'
 import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins'
-import TesterPlugin from './Components/PluginsETdescriptions/testerPlugin'
+//import TesterPlugin from './Components/PluginsETdescriptions/'
 import withAuth from './Components/login/withAuth'
 
 
@@ -36,8 +36,6 @@ function App(props) {
            <Route exact path="/affichagePlugins" component= {withAuth(AffichagePlugins)} />
            
            <Route exact path="/description/:name" component= {withAuth(Description) } />
-
-           <Route exact path="/testerPlugin" component= {withAuth(TesterPlugin) } />
 
            <Route exact path="/accueil" component= {Acceuil} />
            

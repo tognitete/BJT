@@ -4,7 +4,6 @@ const secret = 'audioPluginSecret';
 
 const withAuth = function(req, res, next) {
 
-    console.log('body',req.body)
   const token = req.cookies.token;
   if (!token) {
     res.status(401).send('Unauthorized: No token provided');

@@ -1,0 +1,11 @@
+
+.container {
+    background: linear-gradient(
+      to right, 
+    );
+  }
+   
+    
+  .borderGray{
+    border : 2px solid #cec7c7;
+  }

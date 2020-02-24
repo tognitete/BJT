@@ -1,31 +1,62 @@
-.image {
 
-float: left;
-margin-top: 8em;
-margin-left: 2em;
-
-}
-
-.details
-{
-  margin: 10px 0 ;
-	padding: 0 ;
-	text-align: justify ;
-	font: 0.4em "Trebuchet MS", helvetica, sans-serif ;
-	
+* {
+  box-sizing: border-box;
 }
 
 
 
-.presentation
-  {
-  margin: 10px 0 ;
-	padding: 0 ;
-	text-align: center ;
-	font: 0.8em "Trebuchet MS", helvetica, sans-serif ;
-	height: 258px ;
+/* Style the header */
+.header {
+  
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+}
+
+/* Container for flexboxes */
+.row {
+  display: -webkit-flex;
+  display: flex;
+
+}
+
+/* Create three equal columns that sits next to each other */
+.column {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+  width: 50%;
+  margin-top: 2%;
+}
+
+/* Style the footer */
+.footer {
+
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 0rem;
+  margin-top: 20%;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  .row {
+    -webkit-flex-direction: column;
+    flex-direction: column;
   }
+}
 
-
-
-
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 0px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 8px;
+  cursor: pointer;
+}
