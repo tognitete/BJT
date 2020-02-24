@@ -111,7 +111,7 @@
         }
         var pluginName = $_GET['pluginName'];
         var scriptElement = document.createElement('script');
-        scriptElement.src = '../pluginsUpload/' + pluginName + '/main.js';
+        scriptElement.src = '../plugins/' + pluginName + '/main.js';
         scriptElement.onload = function() {
             document.body.onload = function() {
                 var refNode;
@@ -119,7 +119,7 @@
                 var a = new AudioSynthView();
                 a.draw();
 
-                var pluginURL = "../pluginsUpload/" + pluginName;
+                var pluginURL = "../plugins/" + pluginName;
 
                 fetch(pluginURL + "/main.json").then(responseJSON => {
                     return responseJSON.json();
@@ -176,9 +176,7 @@
             <input type="button" ID="+_OCTAVE" value="+" />
             <br />
             <i>(Use left/right arrows to adjust with keyboard)</i>
-        </div>
+        </div> 
 </body>
-<script>
-</script>
 
 </html>

@@ -195,7 +195,7 @@ app.post('/plugin',withAuth, upload.single('pictures') , function (req, res) {
 pluginServer = express(),
 server = require('http').createServer(pluginServer);
 
-pluginServer.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
+pluginServer.use('/plugin-services', express.static(__dirname + '/plugin-services/'));
 
 server.listen(8080);
 

@@ -1,8 +1,0 @@
-{
-  "documentation": "...",
-  "name": "StereoFreqShifter",
-  "thumbnail": "FaustStereoFreqShifter.png",
-  "vendor": "Larkin",
-  "category":"Modulation",
-  "version": "1.0"
-}
