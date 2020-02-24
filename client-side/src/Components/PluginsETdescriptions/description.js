@@ -43,6 +43,9 @@ getImagePlugin(image){
 
 }
 
+testPlugin() {
+  window.open('http://localhost:8080/audio-plugin/pluginTry/?pluginName=freeverbTEST');
+}
 
 
   render() {
@@ -87,9 +90,9 @@ getImagePlugin(image){
 
 
  
-                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Try it {this.state.data.name} </button>
+                   <button class="button"onClick={this.testPlugin}> Try {this.props.match.params.name}</button>
      
-                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.state.data.name} </button>
+                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.props.match.params.name} </button>
                    
 
                    <br/>     

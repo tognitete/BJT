@@ -33,9 +33,7 @@ export default class CommentForm extends Component {
     });
   };
 
-  /**
-   * Form submit handler
-   */
+  
   onSubmit(e) {
     // prevent default form submission
     e.preventDefault();
