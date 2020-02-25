@@ -25,7 +25,7 @@ const pluginController = require('./controllers/PluginController')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, './uploads/');
+    cb(null, 'uploads/');
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
@@ -42,11 +42,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter
+  storage: storage 
 });
 
 
@@ -95,6 +91,14 @@ app.get('/plugin/:pluginName',withAuth, function(req, res) {
 app.get('/plugins', function(req, res) {
  
   pluginController.getAllPlugins(function(data) {
+    
+    res.send(data);  
+})
+});
+
+app.get('/plugin/:pluginName/comments', function(req, res) {
+ 
+  pluginController.getCommentsForAPlugin(req.params.pluginName,function(data) {
     
     res.send(data);  
 })
@@ -172,7 +176,7 @@ app.post('/auth', function (req, res) {
 });
 
 
-app.post('/plugin', upload.single('pictures'), function (req, res) {
+app.post('/plugin', upload.any(), function (req, res) {
   console.log('Got body:', req);
 
   let pluginInformation = {
@@ -180,15 +184,40 @@ app.post('/plugin', upload.single('pictures'), function (req, res) {
     nom: req.body.nom,
     version : req.body.version,
     description : req.body.description,
-    pictures : req.file.filename ,
+    pictures : req.files[0].filename ,
     opensource : req.body.opensource ,
     topic : req.body.topic,
     tag : req.body.tag,
-    tutoriel : req.body.tutoriel
+    tutoriel : req.body.tutoriel,
+    commentaire : [],
+    fichier : req.files[1].filename
 
   }
   res.send(pluginController.savePlugin(pluginInformation));
 });
+
+app.post('/plugin/:pluginName/comment', function (req, res) {
+  console.log('Got body:', req.body);
+
+
+  pluginController.getPluginByName(req.params.pluginName).then(function(plugin) {
+    
+    if(plugin.commentaire){
+
+      plugin.commentaire.push(req.body.commentaire)
+    }
+   
+
+     res.send(pluginController.savePlugin(plugin));
+  })
+}) 
+  
+
+    
+      
+
+
+
 
 /* plugin try & test */
 

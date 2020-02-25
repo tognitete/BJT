@@ -28,15 +28,40 @@ var plugin = {
         });
     }),
           
-    getPluginByName : ((pluginName,callback) => {
+    getPluginByName : ((pluginName) => {
 
-      var query = PluginModel.find({ 'nom': pluginName }); 
-            query.exec(function (err,user) {
-            if (err) return handleError(err);
-              callback(user)
-            });
+       return new Promise((resolve, reject) => {
+
+             var query = PluginModel.find({ 'nom': pluginName });
+               
+             query.exec(function (err,plugin) {
+      
+              if (err) {reject("Échec")}
+              else  {
+                resolve(plugin);
+              }
+               
+              });
+      
+            }
+      
+            )     
              
+    }),
+
+    getCommentsForAPlugin : ((pluginName,callback) => {
+
+      var query = PluginModel.find({"nom": pluginName});
+
+      query.select("commentaire")
+            
+      query.exec(function (err,comments) {
+      if (err) return handleError(err);
+          callback(comments)
+      });
+
     })
+
     
 }
 
@@ -45,7 +70,9 @@ var plugin = {
 module.exports = {
     savePlugin : plugin.savePlugin,
     getAllPlugins : plugin.getAllPlugins,
-    getPluginByName : plugin.getPluginByName
+    getPluginByName : plugin.getPluginByName,
+    savePluginComment : plugin.savePluginComment,
+    getCommentsForAPlugin : plugin.getCommentsForAPlugin
 };
 
 

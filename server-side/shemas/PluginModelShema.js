@@ -11,7 +11,9 @@ var PluginModelSchema = new Schema({
     opensource : String ,
     topic : String,
     tag : String,
-    tutoriel : String
+    tutoriel : String,
+    commentaire : [String],
+    fichier : String
   });
   
 var pluginModel = mongoose.model('Plugin', PluginModelSchema );
