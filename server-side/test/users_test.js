@@ -2,7 +2,7 @@ var assert = require('assert');
 var userController = require('../controllers/UserController');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+const UserModel = require('../shemas/UserModelShema').userModel
 
 describe('Users', function() {
     var user = {email: "johndoe@mail.com", password: "password"};
@@ -26,16 +26,16 @@ describe('Users', function() {
                     userController.saveUser(userToCreate, function(err) {
                         if (err) done(err);
 
-                        userController.getUserByEmail(userToCreate.email)
-                            .then((res) => {
-                                assert.notEqual(res.length, 0);
-                                assert.equal(res[0].email, userToCreate.email);
-                                assert.equal(res[0].password, userToCreate.password);
+                        var query = UserModel.findOne({ 'email': userToCreate.email });
+                        query.exec(function (err,user) {
+                            if (err) { done(err); }
+                            else {
+                                assert.equal(user.email, userToCreate.email);
+                                assert.equal(user.password, userToCreate.password);
                                 done();
-                            })
-                            .catch((err) => {
-                                done(err);
-                            });
+                            }
+                        });
+
                     });
                 });
         });
