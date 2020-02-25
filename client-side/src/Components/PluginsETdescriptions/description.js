@@ -6,7 +6,7 @@ import axios from 'axios'
 import {  Button } from 'reactstrap';
 
 import StarsRating from "./starsRating";
-import TestCommentAPP from './affichageComment'
+//import TestCommentAPP from './affichageComment'
 import AffichageCommentaire from './affichageComment';
 
 
@@ -31,7 +31,11 @@ export default class Description extends Component {
     this.setState({
       data: response.data[0]
 
+      
+
   })
+
+ 
   console.log(this.state.data)
 }).catch(error => {
 
