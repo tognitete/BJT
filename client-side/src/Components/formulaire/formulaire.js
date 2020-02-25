@@ -24,7 +24,8 @@ class Form extends Component {
 			lien:'',
 			errors: {},
 			invalid: false,
-			fichier: null
+			fichier: null,
+			loaded : 0
 		}
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -110,7 +111,7 @@ class Form extends Component {
 		});
 	}
 
-	/*sendPluginData(data) { 
+	/* sendPluginData(data) { 
         const headers = { 'content-type': 'multipart/form-data' }
         
         fetch("http://localhost:3001/plugin", {
@@ -127,8 +128,13 @@ class Form extends Component {
             })
     
      
-        }*/
-
+		}*/
+		
+		handleselectedFile = event => {
+			this.setState({
+			  fichier: event.target.files[0]
+			})
+		  }
     handleInputChange(event) {
 		
         const target = event.target;
@@ -156,22 +162,6 @@ class Form extends Component {
 		  fichier: event.target.value
 		})
 	  }
-	  
-	handleUpload = () => {
-    const data = new FormData()
-    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
-    axios
-      .post(endpoint, data, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-          })
-        },
-      })
-      .then(res => {
-        console.log(res.statusText)
-      })
-  }
 
 
   checkPluginExists() {
@@ -297,10 +287,9 @@ class Form extends Component {
 						onChange={this.handleLienChange}
 					/>
 				</div></div>
-				<div className="Upload">
-					
-        <input type="file"  value={this.state.fichier} name="" id="" onChange={this.handleFichier} />
-        </div>
+			  <div className="Upload">
+        <input type="file" name="" id="" onChange={this.handleselectedFile} />
+          </div>
         
         
 				<button type="submit">Soumettre</button>

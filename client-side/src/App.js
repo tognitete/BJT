@@ -8,7 +8,7 @@ import Login from './Components/login/login';
 import Acceuil from './Components/login/acceuil';
 import Signup from './Components/login/signup';
 import Logout from './Components/login/logout'
-import AffichagePlugins from './Components/PluginsETdescriptions/AffichagePlugins'
+import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins'
 //import TesterPlugin from './Components/PluginsETdescriptions/'
 import withAuth from './Components/login/withAuth'
 
