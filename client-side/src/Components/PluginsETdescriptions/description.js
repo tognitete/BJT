@@ -6,7 +6,7 @@ import axios from 'axios'
 import {  Button } from 'reactstrap';
 
 import StarsRating from "./starsRating";
-import TestCommentAPP from './affichageComment'
+//import TestCommentAPP from './affichageComment'
 import AffichageCommentaire from './affichageComment';
 
 
@@ -44,7 +44,7 @@ getImagePlugin(image){
 }
 
 testPlugin() {
-  window.open('http://localhost:8080/audio-plugin/pluginTry/?pluginName=freeverbTEST');
+  window.open('http://localhost:8080/plugin-services/try/?pluginName=freeverbTEST');
 }
 
 
