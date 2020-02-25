@@ -43,6 +43,8 @@ import React, { Component } from "react";
         console.log(this.state);
         
         this.sendLoginData({email: this.state.email, password: this.state.password})
+
+        window.location.href='/'
         
   }  
   sendLoginData(data) {	

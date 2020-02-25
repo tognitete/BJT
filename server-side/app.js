@@ -84,7 +84,7 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
-app.get('/plugin/:pluginName',withAuth, function(req, res) {
+app.get('/plugin/:pluginName', function(req, res) {
  
   pluginController.getPluginByName(req.params.pluginName,function(data) {
     

@@ -16,5 +16,8 @@ input ,textarea , select ,button {
    
 }
 
-.rb1 {
+.Upload {
+    margin-left: auto;
+    margin-right: auto;
+    width: 6em
 }
