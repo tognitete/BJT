@@ -11,7 +11,7 @@ import Logout from './Components/login/logout'
 import AffichagePlugins from './Components/PluginsETdescriptions/affichagePlugins'
 //import TesterPlugin from './Components/PluginsETdescriptions/'
 import withAuth from './Components/login/withAuth'
-import MyPlugins from './Components/PluginsETdescriptions/myPlugins'
+
 
 
 function App(props) {
@@ -39,7 +39,7 @@ function App(props) {
            <Route exact path="/description/:name" component= {withAuth(Description) } />
 
            <Route exact path="/accueil" component= {Acceuil} />
-           <Route exact path="/myPlugins"component= {MyPlugins}/>
+          
            <Route exact path="/tester">
           
 

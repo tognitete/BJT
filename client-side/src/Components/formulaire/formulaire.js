@@ -23,13 +23,14 @@ class Form extends Component {
 			tutoriel: '',
 			lien:'',
 			errors: {},
-			invalid: false
+			invalid: false,
+			fichier: null
 		}
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleRadioChange = this.handleRadioChange.bind(this);
-		this.state = { selectedFile: null, loaded: 0, }
-		//console.log('this vaut :', this); 
+		this.handleFichier=this.handleFichier.bind(this);
+
 
 
 	}
@@ -93,7 +94,7 @@ class Form extends Component {
 
 		
 		this.sendPluginData(data)
-		
+		//window.location.href='/affichagePlugins'
 	}
 	
 	sendPluginData(data) {	
@@ -108,6 +109,25 @@ class Form extends Component {
             console.log(error)
 		});
 	}
+
+	/*sendPluginData(data) { 
+        const headers = { 'content-type': 'multipart/form-data' }
+        
+        fetch("http://localhost:3001/plugin", {
+            method: "post",
+            headers: headers,
+            body: JSON.stringify(data)
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res.error) {
+                this.setState({ loading: false, error: res.error });
+              } else {
+              }
+            })
+    
+     
+        }*/
 
     handleInputChange(event) {
 		
@@ -131,10 +151,9 @@ class Form extends Component {
 		}) 
 	}
 
-	handleselectedFile = event => {
+	handleFichier(event) {
 		this.setState({
-		  selectedFile: event.target.files[0],
-		  loaded: 0,
+		  fichier: event.target.value
 		})
 	  }
 	  
@@ -162,10 +181,10 @@ class Form extends Component {
     console.log(response);
         if (response.length>0){
 			alert("Ce plugin existe deja")
-		}else{
+		}
 
-			//window.location.href='/description'
-		}     
+			
+		    
 
   })
 }
@@ -280,7 +299,7 @@ class Form extends Component {
 				</div></div>
 				<div className="Upload">
 					
-        <input type="file" name="" id="" onChange={this.handleselectedFile} />
+        <input type="file"  value={this.state.fichier} name="" id="" onChange={this.handleFichier} />
         </div>
         
         

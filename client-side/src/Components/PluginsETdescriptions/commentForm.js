@@ -50,7 +50,7 @@ export default class CommentForm extends Component {
 
     // persist the comments on server
     let { comment } = this.state;
-    fetch("http:/localhost:3001/plugin/" + this.props.nomPlugin +"/comment", {
+    fetch("http://localhost:3001/plugin/" + this.props.nomPlugin +"/comment", {
       method: "post",
       body: JSON.stringify(comment)
     })
