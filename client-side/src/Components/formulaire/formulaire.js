@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './formulaire.css'
 import ImageUploader from 'react-images-upload'
 import axios from 'axios'
+
 const endpoint = 'http://localhost:3001/plugin'
 
 class Form extends Component {
@@ -20,7 +21,9 @@ class Form extends Component {
 		    topic: '',
 		    tag: '',
 			tutoriel: '',
-			lien:''
+			lien:'',
+			errors: {},
+			invalid: false
 		}
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -80,6 +83,7 @@ class Form extends Component {
 		event.preventDefault()
 		console.log(this.state);
 
+		this.checkPluginExists()
 		const data = new FormData() 
 
 		for ( var key in this.state ) {
@@ -89,6 +93,7 @@ class Form extends Component {
 
 		
 		this.sendPluginData(data)
+		
 	}
 	
 	sendPluginData(data) {	
@@ -148,35 +153,56 @@ class Form extends Component {
         console.log(res.statusText)
       })
   }
+
+
+  checkPluginExists() {
+	  
+    axios.get("http://localhost:3001/plugin/"+this.state.nom)
+    .then(response => {
+    console.log(response);
+        if (response.length>0){
+			alert("Ce plugin existe deja")
+		}else{
+
+			//window.location.href='/description'
+		}     
+
+  })
+}
+  
  
 	render() {
 		const { Nom, Version, description, topic, Tag, Tutoriel, lien } = this.state
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div className="Nom_plugin">
+					
 					<label> Nom du plugin </label>
+					<div>
 					<input 
 						type="text"
 						value={this.state.nom}
 						onChange={this.handleUsernameChange}
 						
 						isRequired/>
-				</div>
+				</div></div>
                 <div>
 					<label>Version </label>
+					<div>
 					<input
 						type="text"
 						value={this.state.version}
 						onChange={this.handleVersionChange}
 					/>
-				</div>
+				</div></div>
 				<div>
 					<label>Description</label>
+					<div>
 					<textarea
 						value={this.state.description}
 						onChange={this.handleCommentsChange}
 					/>
-				</div>
+				</div></div>
                  <div>
 				 <ImageUploader
                 withIcon={true}
@@ -189,6 +215,7 @@ class Form extends Component {
                 <div >
                 <label>
                 Le logiciel est open source:
+				
 				<div className="radio" >
 					<div className="rb1">
 		     <input 
@@ -213,6 +240,7 @@ class Form extends Component {
 
 				<div>
                 <label>Topic</label>
+				<div>
 					<select value={this.state.topic} onChange={this.handleTopicChange}>
 					    <option value=""></option>
 						<option value="modulation">Modultion</option>
@@ -221,36 +249,41 @@ class Form extends Component {
                         <option value="reverb">reverb</option>
                         <option value="accordeur">accordeur</option>
 					</select>
-				</div>
+				</div></div>
 				<div>
 					<label>Tag </label>
+					<div>
 					<input
 						type="text"
 						value={this.state.tag}
 						onChange={this.handleTagChange}
 					/>
-				</div>
+				</div></div>
 				<div>
+				
 					<label>Tutoriel </label>
+					<div>
 					<input
 						type="text"
 						value={this.state.tutoriel}
 						onChange={this.handleTutorielChange}
 					/>
-				</div>
+				</div></div>
                 <div>
 					<label>Lien vers le plugin</label>
+					<div>
 					<input
 						type="url"
 						value={this.state.lien}
 						onChange={this.handleLienChange}
 					/>
-				</div>
-				<div className="App">
+				</div></div>
+				<div className="Upload">
+					
         <input type="file" name="" id="" onChange={this.handleselectedFile} />
-        <button onClick={this.handleUpload}>Upload</button>
-        <div> {Math.round(this.state.loaded,2) } %</div>
-          </div>
+        </div>
+        
+        
 				<button type="submit">Soumettre</button>
 				
 				

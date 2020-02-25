@@ -80,7 +80,7 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
-app.get('/plugin/:pluginName',withAuth, function(req, res) {
+app.get('/plugin/:pluginName', function(req, res) {
  
   pluginController.getPluginByName(req.params.pluginName,function(data) {
     
@@ -224,7 +224,7 @@ app.post('/plugin/:pluginName/comment', function (req, res) {
 pluginServer = express(),
 server = require('http').createServer(pluginServer);
 
-pluginServer.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
+pluginServer.use('/plugin-services', express.static(__dirname + '/plugin-services/'));
 
 server.listen(8080);
 

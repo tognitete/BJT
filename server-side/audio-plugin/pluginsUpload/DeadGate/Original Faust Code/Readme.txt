@@ -1,1 +1,0 @@
-Original code by Oleg Kapitonov. See https://github.com/olegkapitonov/Kapitonov-Plugins-Pack

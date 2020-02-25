@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="origin-trial" data-feature="AudioWorklet" data-expires="2018-03-06" content="AuqouVYOpuBqGUbQMwRTvnR9R5K1T0u5vw5KUqvZQSNox/gKa/dGig1VWcPYXUzuHN1OtTijH+lhVjg8has9RggAAABseyJvcmlnaW4iOiJodHRwczovL3dhc2FiaS5pM3MudW5pY2UuZnI6NDQzIiwiZmVhdHVyZSI6IkF1ZGlvV29ya2xldCIsImV4cGlyeSI6MTUyMDI5NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">
+    <link rel="stylesheet" href="https://wasabi.i3s.unice.fr/WebAudioPluginBank/bower_components/mocha/mocha.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="polyfills/webcomponents-lite.js"></script>
+    <script src="sdk/WebAudioSDK.js"></script>
+    <title>Plugin tester</title>
+</head>
+
+<body>
+    <h1>Plugin Tester</h1>
+    <div id="layout">
+        <div class="content" id="main">
+            <audio src="assets/BasketCaseGreendayriffDI.mp3" id="soundSample" controls loop></audio>
+        </div>
+        <div id="onetest">
+            <div id="WAP"></div>
+            <div id="mocha"></div>
+        </div>
+        <script src="https://wasabi.i3s.unice.fr/WebAudioPluginBank/bower_components/mocha/mocha.js"></script>
+        <script src="https://wasabi.i3s.unice.fr/WebAudioPluginBank/node_modules/chai/chai.js"></script>
+        <script>
+            mocha.setup('bdd')
+        </script>
+</body>
+<script>
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var ctx = new AudioContext();
+    var player = document.getElementById("soundSample");
+    var mediaSource = ctx.createMediaElementSource(player);
+
+    window.onload = () => {
+
+        player.onplay = () => {
+            ctx.resume().then(() => {
+                console.log('Playback resumed successfully');
+            });
+        }
+
+        var $_GET = [];
+        var parts = window.location.search.substr(1).split("&");
+        for (var i = 0; i < parts.length; i++) {
+            var temp = parts[i].split("=");
+            $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+        }
+        if (!('pluginName' in $_GET)) {
+            alert("Le plugin n'a pas pu être chargé.");
+            window.stop();
+        }
+        var pluginName = $_GET['pluginName'];
+        var pluginURL = "../plugins/" + pluginName;
+
+        checkMetadata(pluginURL);
+    }
+
+    function checkMetadata(baseURL) {
+        fetch(baseURL + "/main.json").then(responseJSON => {
+            return responseJSON.json();
+        }).then(metadata => {
+            let className = metadata.vendor + metadata.name;
+            loadPlugin(className, baseURL);
+        }).catch((e) => {
+            console.log(e);
+            alert("Le plugin n'a pas pu être chargé.");
+            window.stop();
+        });
+    }
+
+    function scriptExists(url) {
+        return document.querySelectorAll(`script[src="${url}"]`).length > 0;
+    }
+
+    // add the script tag and load the plugin 
+    function loadPlugin(className, baseURL) {
+        let scriptURL = baseURL + "/main.js";
+
+        if (scriptExists(scriptURL)) {
+            //script exists
+            console.log("SCRIPT EXISTS WE JUST INSTANCIATE THE PLUGIN");
+            buildPlugin(className, baseURL);
+            return;
+        }
+
+        console.log("SCRIPT DOES NOT EXIST, ADD A SCRIPT SRC=, THEN INSTANCIATE PLUGIN")
+
+        // if we are here this means that the script is not present. Add it to the document
+        let script = document.createElement("script");
+        script.src = scriptURL;
+
+        script.onload = function() {
+            // Once the script has been loaded instanciate the plugin
+            buildPlugin(className, baseURL);
+        }
+
+        // will be executed before the onload above...
+        document.head.appendChild(script);
+    }
+
+    function buildPlugin(className, baseURL) {
+
+        var plugin = new window[className](ctx, baseURL);
+        console.log(plugin);
+
+        plugin.load().then((node) => {
+            plugin.loadGui().then((elem) => {
+                console.log("ADDING PLUGIN");
+                document.querySelector("#WAP").appendChild(elem);
+            });
+            document.body.querySelector("#WAP").insertAdjacentHTML('afterbegin', '<h2>' + `${className}` + '</h2>')
+            try {
+                mediaSource.connect(node);
+            } catch (error) {
+                console.log("this plugin does not use audioworkletnode or compositenode");
+                mediaSource.connect(node.getInput(0));
+            }
+            node.connect(ctx.destination);
+
+            testPlugin(node);
+        });
+
+    }
+
+    /* 
+    here we use mocha chai.js to apply unit test on the plugin. The test cases cover the existence and (soon) the type of the API calls.
+    */
+    function testPlugin(param) {
+        var expect = chai.expect;
+        var assert = chai.assert;
+        let plugin = param;
+
+        describe('Metadata', function() {
+            it('plugin should have a JSON getMetadata() method', function() {
+                expect(plugin.getMetadata()).to.exist;
+            });
+            it('the getMetadata() function should return a json object', function() {
+                plugin.getMetadata().then((res) => {
+                    expect(res).to.not.be.empty
+                });
+            });
+        });
+
+        describe('Descriptor', function() {
+            it('plugin should have a JSON getDescriptor() method', function() {
+                expect(plugin.getDescriptor()).to.exist;
+            });
+            it('getDescriptor() function should return a json object', function() {
+                expect(plugin.getDescriptor()).to.not.be.empty;
+            });
+        });
+
+        describe('Param getter', function() {
+            it('plugin should have a getParam(key) method', function() {
+                expect(plugin).to.have.property("getParam")
+            });
+        });
+
+        describe('Param setter', function() {
+            it('plugin should have a setParam(key,value) method', function() {
+                expect(plugin).to.have.property("setParam");
+            });
+        });
+
+        describe('State getter', function() {
+            it('plugin should have a getState() method', function() {
+                expect(plugin).to.have.property("setPatch");
+            });
+        });
+
+        describe('State setter', function() {
+            it('plugin should have a setState(value) method', function() {
+                expect(plugin).to.have.property("setState");
+            });
+        });
+
+        describe('midi enable', function() {
+            it('plugin should have a onMidi(msg) method', function() {
+                expect(plugin).to.have.property("onMidi");
+            });
+        });
+
+        describe('Input Channel Number', function() {
+            it('plugin should have an inputChannelCount() method', function() {
+                expect(plugin.inputChannelCount()).to.exist;
+            });
+        });
+
+        describe('Number of inputs', function() {
+            it('plugin should have an numberOfInputs() method', function() {
+                expect(plugin.numberOfInputs).to.exist;
+
+            });
+        });
+        describe('Number of outputs', function() {
+            it('plugin should have an numberOfOutputs() method', function() {
+                expect(plugin.numberOfOutputs).to.exist;
+            });
+        });
+        mocha.run()
+    }
+</script>
+
+</html>
