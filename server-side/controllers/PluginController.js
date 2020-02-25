@@ -1,8 +1,11 @@
 const PluginModel = require('../shemas/PluginModelShema').pluginModel
 
+function handleError(err) {
+    console.log(err);
+}
 
 var plugin = {
-    savePlugin : ((pluginData) => {
+    savePlugin : ((pluginData, callback = null) => {
 
          // Create an instance of user model
          var pluginInstance = new PluginModel(pluginData);
@@ -10,7 +13,12 @@ var plugin = {
          // Save the new model instance, passing a callback
          pluginInstance.save(function (err) {
 
-         if (err) return handleError(err);
+            if (callback) {
+                if (err) callback(err);
+                else callback();
+            } else {
+                handleError(err);
+            }
          
         });
 
@@ -60,9 +68,14 @@ var plugin = {
           callback(comments)
       });
 
-    })
+    }),
 
-    
+    removePlugin : ((plugin, callback = null) => {
+        PluginModel.deleteOne(plugin, function(err) {
+            if (err) return handleError(err);
+            if (callback) callback();
+        });
+    })
 }
 
    
@@ -72,7 +85,8 @@ module.exports = {
     getAllPlugins : plugin.getAllPlugins,
     getPluginByName : plugin.getPluginByName,
     savePluginComment : plugin.savePluginComment,
-    getCommentsForAPlugin : plugin.getCommentsForAPlugin
+    getCommentsForAPlugin : plugin.getCommentsForAPlugin,
+    removePlugin : plugin.removePlugin
 };
 
 
