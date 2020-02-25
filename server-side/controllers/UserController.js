@@ -1,5 +1,8 @@
 const UserModel = require('../shemas/UserModelShema').userModel
 
+function handleError(err) {
+    console.log(err);
+}
 
 var user = {
     saveUser : ((userData, callback = null) => {
@@ -12,8 +15,12 @@ var user = {
         // Save the new model instance, passing a callback
         userInstance.save(function (err) {
 
-            if (err) return handleError(err);
-            if (callback) callback();
+            if (callback) {
+                if (err) callback(err);
+                else callback();
+            } else {
+                handleError(err);
+            }
 
         });
 

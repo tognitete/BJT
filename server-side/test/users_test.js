@@ -7,13 +7,13 @@ const saltRounds = 10;
 describe('Users', function() {
     var user = {email: "johndoe@mail.com", password: "password"};
 
-    afterEach(function(done) { 
-        userController.removeUser({email: user.email}, function() {
-            done();
-        });
-    });
-        
     describe('create', function() {
+        afterEach(function(done) { 
+            userController.removeUser({email: user.email}, function() {
+                done();
+            });
+        });
+
         it('should be able to create a new user', function(done) {
             bcrypt.hash(user.password, saltRounds,
                 function(err, hashedPassword) {
@@ -23,7 +23,9 @@ describe('Users', function() {
 
                     const userToCreate = {email: user.email, password: hashedPassword};
 
-                    userController.saveUser(userToCreate, function() {
+                    userController.saveUser(userToCreate, function(err) {
+                        if (err) done(err);
+
                         userController.getUserByEmail(userToCreate.email)
                             .then((res) => {
                                 assert.notEqual(res.length, 0);
@@ -35,6 +37,31 @@ describe('Users', function() {
                                 done(err);
                             });
                     });
+                });
+        });
+
+        it('should not be able to create an existing user', function(done) {
+            bcrypt.hash(user.password, saltRounds,
+                function(err, hashedPassword) {
+                    if (err) {
+                        done(err);
+                    }
+
+                    const userToCreate = {email: user.email, password: hashedPassword};
+
+                    userController.saveUser(userToCreate, function(err) {
+                        if (err) done(err);
+
+                        const hey = userController.saveUser(userToCreate, function(err) {
+                            if (err) {
+                                done();
+                            }
+                            else {
+                                done("Should terminate with an error.");
+                            }
+                        });
+                    });
+
                 });
         });
     });
