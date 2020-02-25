@@ -31,7 +31,11 @@ export default class Description extends Component {
     this.setState({
       data: response.data[0]
 
+      
+
   })
+
+ 
   console.log(this.state.data)
 }).catch(error => {
 
