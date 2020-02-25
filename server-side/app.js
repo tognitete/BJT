@@ -25,7 +25,7 @@ const pluginController = require('./controllers/PluginController')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, './uploads/');
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
@@ -80,7 +80,7 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
-app.get('/plugin/:pluginName', function(req, res) {
+app.get('/plugin/:pluginName',withAuth, function(req, res) {
  
   pluginController.getPluginByName(req.params.pluginName,function(data) {
     
@@ -204,7 +204,7 @@ app.post('/plugin/:pluginName/comment', function (req, res) {
     
     if(plugin.commentaire){
 
-      plugin.commentaire.push(req.body.commentaire)
+      plugin.commentaire.push(req.body.comment)
     }
    
 
@@ -224,7 +224,7 @@ app.post('/plugin/:pluginName/comment', function (req, res) {
 pluginServer = express(),
 server = require('http').createServer(pluginServer);
 
-pluginServer.use('/plugin-services', express.static(__dirname + '/plugin-services/'));
+pluginServer.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
 
 server.listen(8080);
 
