@@ -117,7 +117,7 @@ app.post('/', withAuth,function (req, res) {
 
 
 app.post('/user', function (req, res) {
-  console.log('Got body:', req.body);
+  
 
 
   bcrypt.hash(req.body.password, saltRounds,
@@ -143,9 +143,6 @@ app.post('/auth', function (req, res) {
    
 
   userController.getUserByEmail(req.body.email).then(function(data) {
-
-
-       console.log("data",data)
       
       if(data.length == 0){
 
@@ -162,7 +159,6 @@ app.post('/auth', function (req, res) {
         const token = jwt.sign(payload, secret, {
           expiresIn: '1h'
         });
-        console.log('token',token)
         res.cookie('token', token, { httpOnly: true })
           .sendStatus(200);
        }
@@ -177,7 +173,7 @@ app.post('/auth', function (req, res) {
 
 
 app.post('/plugin', upload.any(), function (req, res) {
-  console.log('Got body:', req);
+  
 
   let pluginInformation = {
 
@@ -197,7 +193,7 @@ app.post('/plugin', upload.any(), function (req, res) {
 });
 
 app.post('/plugin/:pluginName/comment', function (req, res) {
-  console.log('Got body:', req.body);
+
 
 
   pluginController.getPluginByName(req.params.pluginName).then(function(plugin) {
@@ -224,7 +220,7 @@ app.post('/plugin/:pluginName/comment', function (req, res) {
 pluginServer = express(),
 server = require('http').createServer(pluginServer);
 
-pluginServer.use('/audio-plugin', express.static(__dirname + '/audio-plugin/'));
+pluginServer.use('/plugin-services', express.static(__dirname + '/plugin-services/'));
 
 server.listen(8080);
 
