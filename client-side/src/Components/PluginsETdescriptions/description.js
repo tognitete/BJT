@@ -99,7 +99,7 @@ testPlugin() {
                    <br/>     
                    <br/>  
                    <br/>    
-                   <AffichageCommentaire/>
+                   <AffichageCommentaire nomPlugin={this.props.match.params.name}/>
 
   </div>  
     
