@@ -89,4 +89,20 @@ describe('Plugins', function() {
             });
         });
     });
+
+    describe('comments', function() {
+        beforeEach(function(done) {
+            pluginController.savePlugin(plugin, function(err) {
+                if (err) { done(err); }
+                else { done(); }
+            });
+        });
+
+        it('should get comments for a plugin', function(done) {
+            pluginController.getCommentsForAPlugin(plugin.nom, function(res) {
+                assert.equal(JSON.stringify(res[0].commentaire), JSON.stringify(plugin.commentaire));
+                done();
+            });
+        });
+    });
 });
