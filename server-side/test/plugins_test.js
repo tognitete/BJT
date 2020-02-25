@@ -17,12 +17,13 @@ describe('Plugins', function() {
         fichier : "plugin.dll"
     }
 
-    describe('create', function() {
-        afterEach(function(done) { 
-            pluginController.removePlugin({nom: plugin.nom}, function() {
-                done();
-            });
+    afterEach(function(done) { 
+        pluginController.removePlugin({nom: plugin.nom}, function() {
+            done();
         });
+    });
+
+    describe('create', function() {
 
         it('should be able to create a new plugin', function(done) {
             pluginController.savePlugin(plugin, function(err) {
@@ -47,5 +48,45 @@ describe('Plugins', function() {
             });
         });
 
+    });
+
+    describe('get', function() {
+        beforeEach(function(done) {
+            pluginController.savePlugin(plugin, function(err) {
+                if (err) { done(err); }
+                else { done(); }
+            });
+        });
+
+        it('should be able to find the plugin by its name', function(done) {
+            pluginController.getPluginByName(plugin.nom)
+                .then((res) => {
+                    assert.equal(res[0].nom, plugin.nom);
+                    assert.equal(res[0].version, plugin.version);
+                    assert.equal(res[0].description, plugin.description);
+                    assert.equal(res[0].pictures, plugin.pictures);
+                    assert.equal(res[0].opensource, plugin.opensource);
+                    assert.equal(res[0].topic, plugin.topic);
+                    assert.equal(res[0].tag, plugin.tag);
+                    assert.equal(JSON.stringify(res[0].commentaire), JSON.stringify(plugin.commentaire));
+                    assert.equal(res[0].fichier, plugin.fichier);
+                    done();
+                })
+                .catch((err) => {
+                    done(err);
+                });
+        });
+
+        it('should be in all plugins', function(done) {
+            pluginController.getAllPlugins(function(res) {
+                for (var p of res) {
+                    if (p.nom == plugin.nom) {
+                        done();
+                        return;
+                    }
+                }
+                done(new Error("Not found"));
+            });
+        });
     });
 });
