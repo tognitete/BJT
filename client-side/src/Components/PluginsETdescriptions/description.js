@@ -6,7 +6,7 @@ import axios from 'axios'
 import {  Button } from 'reactstrap';
 
 import StarsRating from "./starsRating";
-import TestCommentAPP from './affichageComment'
+//import TestCommentAPP from './affichageComment'
 import AffichageCommentaire from './affichageComment';
 
 
@@ -47,6 +47,9 @@ getImagePlugin(image){
 
 }
 
+testPlugin() {
+  window.open('http://localhost:8080/plugin-services/try/?pluginName=freeverbTEST');
+}
 
 
   render() {
@@ -91,9 +94,9 @@ getImagePlugin(image){
 
 
  
-                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Try it {this.state.data.name} </button>
+                   <button class="button"onClick={this.testPlugin}> Try {this.props.match.params.name}</button>
      
-                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.state.data.name} </button>
+                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.props.match.params.name} </button>
                    
 
                    <br/>     

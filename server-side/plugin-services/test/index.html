@@ -11,9 +11,7 @@
 </head>
 
 <body>
-    <div class="title">
-        <h1>Plugin Tester</h1>
-    </div>
+    <h1>Plugin Tester</h1>
     <div id="layout">
         <div class="content" id="main">
             <audio src="assets/BasketCaseGreendayriffDI.mp3" id="soundSample" controls loop></audio>
@@ -53,7 +51,7 @@
             window.stop();
         }
         var pluginName = $_GET['pluginName'];
-        var pluginURL = "../pluginsUpload/" + pluginName;
+        var pluginURL = "../plugins/" + pluginName;
 
         checkMetadata(pluginURL);
     }
@@ -101,24 +99,15 @@
         document.head.appendChild(script);
     }
 
-    // instanciate the plugin 
     function buildPlugin(className, baseURL) {
 
         var plugin = new window[className](ctx, baseURL);
         console.log(plugin);
 
         plugin.load().then((node) => {
-            // loads and initialize the audio processor part
-            // Then use the factory to create the HTML custom elem that holds the GUI
-            // The loadGUI method takes care of inserting the link rel=import part,
-            // not doing it twice, and associate the node with its GUI.
             plugin.loadGui().then((elem) => {
                 console.log("ADDING PLUGIN");
-                // show the GUI of the plugn, the audio part is ready to be used
                 document.querySelector("#WAP").appendChild(elem);
-                //mediaSource.connect(node);
-                //node.connect(ctx.destination);
-                // Add node to the chain of plugins
             });
             document.body.querySelector("#WAP").insertAdjacentHTML('afterbegin', '<h2>' + `${className}` + '</h2>')
             try {
@@ -127,8 +116,6 @@
                 console.log("this plugin does not use audioworkletnode or compositenode");
                 mediaSource.connect(node.getInput(0));
             }
-            // if (node instanceof AudioWorkletNode) 
-            // else mediaSource.connect(node.getInput(0));
             node.connect(ctx.destination);
 
             testPlugin(node);

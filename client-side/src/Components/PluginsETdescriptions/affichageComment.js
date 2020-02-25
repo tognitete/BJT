@@ -17,35 +17,15 @@ class AffichageCommentaire extends Component {
     this.addComment = this.addComment.bind(this);
   }
 
-  componentDidMount() {
-    // loading
-    this.setState({ loading: true });
 
-    // get all the comments
-    fetch("http://localhost:7777")
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          comments: res,
-          loading: false
-        });
-      })
-      .catch(err => {
-        this.setState({ loading: false });
-      });
-  }
-
-  /**
-   * Add new comment
-   * @param {Object} comment
-   */
+  
   addComment(comment) {
     this.setState({
       loading: false,
       comments: [comment, ...this.state.comments]
     });
   }
-
+ 
   render() {
     const loadingSpin = this.state.loading ? "App-logo Spin" : "App-logo";
     return (
@@ -61,6 +41,7 @@ class AffichageCommentaire extends Component {
             <CommentList
               loading={this.state.loading}
               comments={this.state.comments}
+              
             />
           </div>
         </div>
