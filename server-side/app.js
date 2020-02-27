@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 
 const secret = 'audioPluginSecret';
 
+
 app.use(cookieParser());
 
 const withAuth = require('./middleware');
@@ -80,13 +81,15 @@ app.get('/users/:userID', function(req, res) {
 })
 });
 
-app.get('/plugin/:pluginName',withAuth, function(req, res) {
- 
-  pluginController.getPluginByName(req.params.pluginName,function(data) {
-    
-    res.send(data);
+app.get('/plugin/:pluginName', function(req, res) {
+
+   
+   pluginController.getPluginByName(req.params.pluginName).then(function(plugin) {
+
+       res.send(plugin)
 })
-});
+
+})
 
 app.get('/plugins', function(req, res) {
  
@@ -104,9 +107,7 @@ app.get('/plugin/:pluginName/comments', function(req, res) {
 })
 });
 
-app.get('/checkToken', withAuth, function(req, res) {
-  res.sendStatus(200);
-});
+
 
 
 // POST method route
@@ -140,9 +141,8 @@ app.post('/user', function (req, res) {
 
 app.post('/auth', function (req, res) {
 
-   
-
-  userController.getUserByEmail(req.body.email).then(function(data) {
+      
+    userController.getUserByEmail(req.body.email).then(function(data) {
       
       if(data.length == 0){
 
@@ -159,22 +159,23 @@ app.post('/auth', function (req, res) {
         const token = jwt.sign(payload, secret, {
           expiresIn: '1h'
         });
-        res.cookie('token', token, { httpOnly: true })
-          .sendStatus(200);
+       // res.cookie('token', token, { httpOnly: true })
+        //  .sendStatus(200);
+
+        res.send(token)
        }
      });
    }
     })
-
 
    
  
 });
 
 
-app.post('/plugin', upload.any(), function (req, res) {
+app.post('/plugin', upload.any(), withAuth,function (req, res) {
   
-
+  console.log(req)
   let pluginInformation = {
 
     nom: req.body.nom,
@@ -209,30 +210,53 @@ app.post('/plugin/:pluginName/comment', function (req, res) {
 }) 
   
 
-    
+app.post('/checkToken', withAuth, function(req, res) {
+  res.sendStatus(200);
+});    
       
 
 
 
 
 /* plugin try & test */
-
+const download = require("download")
 pluginServer = express(),
-server = require('http').createServer(pluginServer);
+server_plug = require('http').createServer(pluginServer);
 
-pluginServer.use('/audio-plugin', express.static(__dirname + '/plugin-services/'));
+pluginServer.use('/plugin-services', express.static(__dirname + '/plugin-services/'));
 
-server.listen(8080);
+pluginServer.get('/download/:pluginName', function(req, res){
+
+  pluginController.getPluginByName(req.params.pluginName,function(data) {
+    
+    res.send(data);
+
+    /*const file = __dirname +"/uploads/"+ data.fichier ;
+
+    var files = fs.createReadStream(file);
+    res.writeHead(200, {'Content-disposition': 'attachment; filename=plugin.zip'}); //here you can add more headers
+    files.pipe(res)*/
+
+    /*download('https://codeload.github.com/tognitete/BJT/zip/master', 'uploads',{extract:true}).then(() => {
+    console.log('done!');
+*/
+});
+})
+
+  
+//});
+
+server_plug.listen(8080);
 
 /* */
 
 /* display plugin image */
 imageServer = express(),
-server = require('http').createServer(imageServer);
+server_img = require('http').createServer(imageServer);
 
 imageServer.use('/uploads', express.static(__dirname + '/uploads/'));
 
-server.listen(8081);
+server_img.listen(8081);
 
 /* */
 

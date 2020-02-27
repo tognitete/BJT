@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios'
 
 
-export default function withAuth(ComponentToProtect) {
+export default function withAuth(ComponentToProtect,token) {
   return class extends Component {
     constructor() {
       super();
@@ -14,7 +14,9 @@ export default function withAuth(ComponentToProtect) {
     }
 
       componentDidMount() {
-        fetch('/checkToken')
+        console.log("Accueil",token)
+        const newToken = {"token":token}
+        axios.post("http://localhost:3001/checkToken",newToken)
           .then(res => {
             if (res.status === 200) {
               this.setState({ loading: false });
@@ -29,6 +31,8 @@ export default function withAuth(ComponentToProtect) {
           });
       }
     
+      
+  
 
     render() {
       const { loading, redirect } = this.state;
@@ -38,7 +42,7 @@ export default function withAuth(ComponentToProtect) {
       if (redirect) {
         return <Redirect to="/" />;
       }
-      return <ComponentToProtect {...this.props} />;
+      return <ComponentToProtect {...this.props} token={token} />;
     }
   }
 }

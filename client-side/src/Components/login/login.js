@@ -55,12 +55,14 @@ import React, { Component } from "react";
         this.UserAuthentifiaction({email:this.state.email,password:this.state.password})
   }  
      
-  UserAuthentifiaction(data) {
+   UserAuthentifiaction(data) {
 
     axios.post("http://localhost:3001/auth",data)
     .then(res => {
       if (res.status === 200) {
         this.setState({ loggedIn: true });
+        console.log("res",res.data)
+        this.props.data.setToken(res.data)
         this.props.history.push('/accueil');
       } else {
         const error = new Error(res.error);
@@ -71,7 +73,29 @@ import React, { Component } from "react";
       console.error(err);
       alert('Error logging in please try again');
     });
+
   }
+
+    /*fetch('http://localhost:3001/auth', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        this.props.history.push('/accueil');
+      } else {
+        const error = new Error(res.error);
+        throw error;
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error logging in please try again');
+    });
+  }*/
       
       render() { 
         

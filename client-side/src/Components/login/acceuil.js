@@ -2,11 +2,11 @@ import React from "react"
 import {Redirect} from "react-router-dom"
 import Axios from "axios"
 import { Link, NavLink,Route } from 'react-router-dom'
+import Cookies from 'js-cookie';
 export default class Acceuil extends React.Component{
 
-    constructor(){
-        super()
-        
+    constructor(props){
+        super(props)         
     }
 
     

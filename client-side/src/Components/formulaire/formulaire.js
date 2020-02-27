@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './formulaire.css'
 import ImageUploader from 'react-images-upload'
 import axios from 'axios'
+import Cookies from 'js-cookie';
 
 const endpoint = 'http://localhost:3001/plugin'
 
@@ -24,7 +25,8 @@ class Form extends Component {
 			lien:'',
 			errors: {},
 			invalid: false,
-			fichier: null
+			fichier: null,
+			token : Cookies.get('token')
 		}
 		this.onDrop =  this.onDrop.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,7 +34,7 @@ class Form extends Component {
 		this.handleFichier=this.handleFichier.bind(this);
 
 
-
+       console.log(this.state.token)
 	}
 
 	onDrop(picture) {
@@ -91,6 +93,8 @@ class Form extends Component {
 			data.append(key, this.state[key]);
 			
 		}
+
+		data.append("token",this.props.token)
 
 		
 		this.sendPluginData(data)
@@ -153,7 +157,7 @@ class Form extends Component {
 
 	handleFichier(event) {
 		this.setState({
-		  fichier: event.target.value
+			fichier: event.target.files[0]
 		})
 	  }
 	  
@@ -299,7 +303,7 @@ class Form extends Component {
 				</div></div>
 				<div className="Upload">
 					
-        <input type="file"  value={this.state.fichier} name="" id="" onChange={this.handleFichier} />
+        <input type="file"  name="" id="" onChange={this.handleFichier} />
         </div>
         
         

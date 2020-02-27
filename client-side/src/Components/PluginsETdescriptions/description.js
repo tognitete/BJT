@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import pluginImage from '../../Images/pluginImage.png'
-import '../PluginsETdescriptions/description.css' 
+import './description.css' 
 import axios from 'axios'
 import {  Button } from 'reactstrap';
 
@@ -14,20 +14,27 @@ import AffichageCommentaire from './affichageComment';
 export default class Description extends Component {
   constructor(props) {
 
-		super(props)
-      this.getPluginData(this.props.match.params.name)
+    
 
-
+    super(props)
+    
+      
       this.state = {
 			
-        data: []
+        data: [],
+        fichier : null
       }
 
+      this.getPluginData(this.props.match.params.name)
+
+      console.log("this.props.match.params.name",this.props.match.params.name)
+      
   }
+
   getPluginData(nom) {
     axios.get("http://localhost:3001/plugin/"+nom)
     .then(response => {
-    console.log(response)
+    console.log("data",response.data[0])
     this.setState({
       data: response.data[0]
 
@@ -36,7 +43,7 @@ export default class Description extends Component {
   })
 
  
-  console.log(this.state.data)
+  console.log("this.state.data",this.state.data)
 }).catch(error => {
 
     console.log(error)
@@ -46,11 +53,40 @@ getImagePlugin(image){
   return 'http://localhost:8081/uploads/'+image
 
 }
+getPLuginUrl(pluginName){
 
+  axios.get("http://localhost:3001/plugin/"+pluginName)
+      .then(response => {
+      console.log(response)
+      this.setState({
+        fichier: response.data.fichier
+  
+    })
+    console.log("pluginName",this.state.data)
+  }).catch(error => {
+  
+      console.log(error)
+                   });
+}
 testPlugin() {
-  window.open('http://localhost:8080/audio-plugin/pluginTry/?pluginName=freeverbTEST');
+  window.open('http://localhost:8080/plugin-services/test?pluginName=freeverbTEST');
+}
+tryPlugin() {
+
+  
+
+  window.open('http://localhost:8080/plugin-services/try?pluginName=freeverbTEST');
 }
 
+
+download() {
+
+ 
+
+  window.open("https://codeload.github.com/tognitete/BJT/zip/master")
+
+
+}
 
   render() {
     return (
@@ -63,7 +99,7 @@ testPlugin() {
         <div class="row">   
         
                 <div class="column">   
-                        <img src={this.getImagePlugin(this.state.data.pictures)} alt={"plugin image"}/>
+                        <img className="imgPlugin" src={this.getImagePlugin(this.state.data.pictures)} alt={"plugin image"}/>
                         <h1>     Plugin description  {this.state.data.description}  </h1>
                         <br/> 
                         <br/> 
@@ -94,10 +130,10 @@ testPlugin() {
 
 
  
-                   <button class="button"onClick={this.testPlugin}> Try {this.props.match.params.name}</button>
+                   <button class="button"onClick={this.tryPlugin}> Try {this.props.match.params.name}</button>
      
-                   <button class="button" onClick={event =>  window.location.href='/affichagePlugins/'}>Download {this.props.match.params.name} </button>
-                   <button class="button" onClick={event =>  window.location.href='/test/'}>Test {this.props.match.params.name} </button>
+                   <button class="button" onClick={this.download}>Download {this.props.match.params.name} </button>
+                   <button class="button" onClick={this.testPlugin}>Test {this.props.match.params.name} </button>
                    
 
                    <br/>     

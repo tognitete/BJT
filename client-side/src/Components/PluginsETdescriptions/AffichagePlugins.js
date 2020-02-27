@@ -7,6 +7,8 @@ import './description.css'
 import axios from 'axios'
 import Card from 'react-bootstrap/Card'
 import { Container, Row, Col, Button } from 'reactstrap';
+import { Link, NavLink,Route } from 'react-router-dom'
+import { Next } from 'react-bootstrap/PageItem'
 
 
 
@@ -46,6 +48,10 @@ export default class AffichagePlugins extends Component {
   
   }
 
+
+
+  
+
  GetRow(){
    let image = ""
  const tabShow =  this.state.data.map(function(d, i){
@@ -62,7 +68,7 @@ export default class AffichagePlugins extends Component {
             <Card.Text>
                 {d.description}
             </Card.Text>
-            <Button style={{ width: '10rem' }} onClick={event =>  window.location.href='/description/'+d.nom}>C</Button>
+            <NavLink to={"/description/"+d.nom}><Button style={{ width: '10rem' }}>Consulter</Button></NavLink> 
           </Card.Body>
         </Card>
     </Col> 

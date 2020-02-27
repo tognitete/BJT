@@ -22,7 +22,7 @@ class AffichageCommentaire extends Component {
       // loading
       this.setState({ loading: true });
   
-  const url="http://localhost:3001/plugin" + this.props.nomPlugin + "/comments"
+  const url="http://localhost:3001/plugin/" + this.props.nomPlugin + "/comments"
   console.log (url)
       // get all the comments
       fetch(url)

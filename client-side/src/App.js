@@ -14,8 +14,30 @@ import withAuth from './Components/login/withAuth'
 
 
 
-function App(props) {
+export default class extends React.Component{
+
+  constructor(props) {
+    super(props);
+
+     
+    this.state = {
+
+        token : ""
+    }
+
+
+  }
+
+  setToken(newToken) {
+
+      this.setState({token:newToken})
+  }
+
+  render() {
+
   return (
+
+
     <>
      <BrowserRouter>
 
@@ -26,19 +48,21 @@ function App(props) {
            
        
            
-       <Route exact path="/" component= {Login} />
+      
+
+         <Route exact path="/" render={(props) => <Login {...props} data={{token:this.state.token , setToken:this.setToken.bind(this)}} />}/>
          
           <Route exact path="/signup" component= {Signup} />
 
-          <Route exact path="/formulaire" component= {withAuth(Form)} />
+          <Route exact path="/formulaire" component= {withAuth(Form,this.state.token)} />
            
           <Route exact path="/logout" component= {Logout} />
            
-           <Route exact path="/affichagePlugins" component= {withAuth(AffichagePlugins)} />
+           <Route exact path="/affichagePlugins" component= {withAuth(AffichagePlugins,this.state.token)} />
            
-           <Route exact path="/description/:name" component= {withAuth(Description) } />
+           <Route exact path="/description/:name" component= {Description } />
 
-           <Route exact path="/accueil" component= {Acceuil} />
+           <Route exact path="/accueil" component= {withAuth(Acceuil,this.state.token)} />
           
            <Route exact path="/tester">
           
@@ -61,5 +85,5 @@ function App(props) {
   
   
 }
-export default App;
+}
 
